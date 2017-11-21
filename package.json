@@ -19,9 +19,9 @@
     "build": "react-scripts build",
     "test": "eslint src",
     "eject": "react-scripts eject",
-    "dev-server": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
-    "build-server": "babel src -s -D -d dist --presets es2015,stage-0",
-    "prestart": "npm run -s build",
+    "dev-server": "nodemon -w server --exec \"babel-node server --presets es2015,stage-0\"",
+    "build-server": "babel server -s -D -d dist --presets es2015,stage-0",
+    "prestart": "npm run -s build-server",
     "start-prod": "node dist"
   },
   "eslintConfig": {
