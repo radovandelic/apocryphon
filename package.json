@@ -1,0 +1,49 @@
+{
+  "name": "apocryphon",
+  "version": "0.1.0",
+  "main": "dist",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "compression": "^1.5.2",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "morgan": "^1.8.0",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-scripts": "1.0.17",
+    "resource-router-middleware": "^0.6.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "eslint src",
+    "eject": "react-scripts eject",
+    "dev-server": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
+    "build-server": "babel src -s -D -d dist --presets es2015,stage-0",
+    "prestart": "npm run -s build",
+    "start-prod": "node dist"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 7,
+      "sourceType": "module"
+    },
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "no-console": 0,
+      "no-unused-vars": 1
+    }
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "eslint": "^3.1.1",
+    "nodemon": "^1.9.2"
+  }
+}
