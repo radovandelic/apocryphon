@@ -1,3 +1,141 @@
 body {
-    background: orange;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 14px;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+  }
+#root {
+    display: flex;
+    justify-content: center;
+
+    & .app {
+        max-width: 1000px;
+        width: 1000px;
+    }
+}
+ @mixin transition {
+     transition: .25s all ease-in-out;
+ } 
+ $color1: #0084FF;
+ $color1_c: #fff;
+
+ $color2: orange;
+ $color2_c: #000;
+
+ $color3: orangered;
+ $color3_c: #fff;
+
+  .header {
+    background: $color1;
+    color: white;
+
+    padding: 2px 20px 2px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+      & .left {
+          display: flex;
+          align-items: center;
+
+        & .logo {
+            height: 40px;
+            width: 40px;
+            background-position: center;
+            background-image: url(./logo.svg);
+            background-repeat: no-repeat;
+        }
+
+      }
+  }
+
+.content {
+    padding: 20px;
+    
+    display: flex;
+
+    .left {
+        flex-basis: 200px;
+
+        display: flex;
+        flex-direction: column;
+
+        & button.word {
+            padding: 9px 0;
+            margin: 2px 0;
+
+            cursor: pointer;
+
+            border: none;
+            background: $color1;
+            color: white;
+
+            @include transition;
+            &.active {
+                background: $color3;
+            }
+            &:hover {
+                background: $color2;
+            }
+        }
+    }
+    .center { 
+        flex: 1;
+        padding: 0 20px;
+
+        display: flex;
+        flex-direction: column;
+
+        & .current-word {
+            color: $color3;
+        }
+
+        & .inputs {
+            display: flex;
+            flex-direction: column;
+
+            margin-top: 20px;
+
+            & .input,
+            & .button {
+                margin-bottom: 5px;
+            }
+            & .button {
+                background: $color1;
+                color: $color1_c;
+                
+                &:hover {
+                    background: darken($color1, 10);
+                    color: $color1_c;
+                }
+            }
+        }
+    }
+    .right {
+        flex-basis: 200px;
+    }
+}
+.input, 
+.button {
+    padding: 7px 15px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+.button {
+    border: none;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.input {
+    border: 1px solid grey;
+    cursor: text;
 }
