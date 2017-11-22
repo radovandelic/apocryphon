@@ -6,16 +6,18 @@ import { connect } from 'react-redux';
 
 class App extends Component {
   render = () => {
-    var { language } = this.props;     // redux
+    var { level, language } = this.props;     // redux
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Your current language: {language}</h1>
+          <div className="App-title">Your current level: {level}</div>
         </header>
-        <p className="App-intro">
+        <div className="App-intro">
           <Languages />
-        </p>
+          <Level />
+        </div>
       </div>
     );
   }
@@ -23,7 +25,8 @@ class App extends Component {
 
 const mapStateToProps = state => {  // redux
   return {                          // redux
-    language: state.language        // redux
+    language: state.language,        // redux
+    level: state.level        // redux
   }
 }
 

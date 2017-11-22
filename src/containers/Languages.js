@@ -6,7 +6,7 @@ export class Languages extends Component {
         const { changeLanguage } = this.props;
         var { language } = this.props;
         return (
-            <div>
+            <p>
                 <select defaultValue={language} id="languages" onChange={e => {
                     language = e.target.value;
                     changeLanguage(language)
@@ -16,7 +16,7 @@ export class Languages extends Component {
                     <option value="french">French</option>
                     <option value="german">German</option>
                 </select>
-            </div>
+            </p>
         );
     }
 }
