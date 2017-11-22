@@ -11,7 +11,7 @@ function languageReducer(state = 'english', action) {
     }
 }
 
-function levelReducer(state = 'beginner', action) {
+function levelReducer(state = 'noob', action) {
     switch (action.type) {
         case 'CHANGE_LEVEL':
             return action.level

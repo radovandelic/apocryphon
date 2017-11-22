@@ -23,7 +23,7 @@ app.use(bodyParser.json({
 	limit: config.bodyLimit
 }));
 
-app.use("/", express.static("build"));
+//app.use(express.static("build"));
 
 // connect to db
 initializeDb(db => {
