@@ -1,22 +1,20 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var connectingString = require('./connectionstring');
 
 module.exports = {
-    database: connectingString,
-    startDB: () => {
-        mongoose.Promise = global.Promise;
-        mongoose.connect(this.database, {useMongoClient: true});
+  database: connectingString,
+  startDB: () => {
+    mongoose.Promise = global.Promise;
+    mongoose.connect(connectingString, { useMongoClient: true });
 
-        db= mongoose.connection;
+    var db = mongoose.connection;
 
+    db.once('open', () => {
+      console.log('connected to mongodb');
+    });
 
-        db.once('open'), () => {
-            console.log('connected to mongodb');
-        });
-
-        db.on('error', (error)=> {
-            console.log(error);
-        });
-
-    }
-}
+    db.on('error', error => {
+      console.log(error);
+    });
+  }
+};

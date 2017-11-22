@@ -36,6 +36,7 @@ app.use(function(req, res) {
   res.statusCode = 404;
   res.send("Page doesn't exist");
 });
+// app.use("/", express.static("build"));
 
 // connect to db
 initializeDb(db => {

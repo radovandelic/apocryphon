@@ -1,6 +1,6 @@
-var db = require('../config/database');
+var db = require('../../config/database');
 var mongoose = require('mongoose');
-var schema = require('./schema');
+var schema = require('./user');
 
 db.startDB();
 var User = mongoose.model('User', schema);

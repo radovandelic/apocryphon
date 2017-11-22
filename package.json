@@ -56,13 +56,18 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "node scripts/start.js & NODE_ENV=development npm run server",
+    "start-win": "start node scripts/start.js && npm run win-server",
     "build": "node scripts/build.js",
     "test": "eslint src",
-    "dev-server": "nodemon -w server --exec \"babel-node server --presets es2015,stage-0\"",
+    "server": "nodemon -w server --exec \"babel-node server --presets es2015,stage-0\"",
     "build-server": "babel server -s -D -d dist --presets es2015,stage-0",
     "prestart-prod": "npm run -s build-server",
-    "start-prod": "node dist"
+    "start-prod": "node dist",
+    "win-server": "SET NODE_ENV=development&& npm run server"
+  },
+  "env": {
+    "NODE_ENV": "development"
   },
   "eslintConfig": {
     "extends": "react-app"

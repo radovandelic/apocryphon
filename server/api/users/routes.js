@@ -4,6 +4,7 @@ var bcrypt = require('bcrypt');
 
 router.post('/create', (req, res) => {
   var user = req.body;
+  console.log(req.body);
   bcrypt.hash(user.password, 8, (err, hash) => {
     if (err) {
       res.status(500).json(err);

@@ -5,8 +5,8 @@ import { Level, Languages } from './containers';
 import { connect } from 'react-redux';
 
 class App extends Component {
-  render() {
-    var { language } = this.props     // redux
+  render = () => {
+    var { language } = this.props;     // redux
     return (
       <div className="App">
         <header className="App-header">
