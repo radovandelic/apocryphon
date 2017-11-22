@@ -56,10 +56,11 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "eslint src",
-    "dev-server": "NODE_ENV=development nodemon -w server --exec \"babel-node server --presets es2015,stage-0\"",
+    "dev-server": "nodemon -w server --exec \"babel-node server --presets es2015,stage-0\"",
     "build-server": "babel server -s -D -d dist --presets es2015,stage-0",
     "prestart-prod": "npm run -s build-server",
-    "start-prod": "node dist"
+    "start-prod": "node dist",
+    "win-server": "SET NODE_ENV=development&& npm run dev-server"
   },
   "env": {
     "NODE_ENV": "development"
