@@ -70,6 +70,7 @@ router.delete('/:id/delete', (req, res) => {
 
 // login //
 router.post('/login', (req, res) => {
+  console.log('sessions:', req.session);
   var email = req.body.email;
   var password = req.body.password;
   console.log(email, password);
@@ -82,8 +83,11 @@ router.post('/login', (req, res) => {
           .compare(password, user.password)
           .then(result => {
             console.log(user.password);
-            if (result) res.status(200).json(user);
-            else
+            if (result) {
+              req.session.user = user;
+              res.status(200).json(user);
+              console.log(req.session);
+            } else
               res
                 .status(404)
                 .json({ status: 'email/password combo not found' });
@@ -97,7 +101,11 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
+  console.log('seesion before log out', req.session);
+
+  req.session.reset();
   req.logout();
+  console.log('seesion after logging out', req.session);
 
   res.status(200).json('you have logged out');
 });
