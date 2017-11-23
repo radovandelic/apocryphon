@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var User = require('./model');
 var bcrypt = require('bcrypt');
+const passport = require('passport');
 
 router.post('/create', (req, res) => {
   var user = req.body;
@@ -71,7 +72,7 @@ router.delete('/:id/delete', (req, res) => {
 router.post('/login', (req, res) => {
   var email = req.body.email;
   var password = req.body.password;
-
+  console.log(email, password);
   User.findOne({ email: email }, (err, user) => {
     if (err) {
       res.status(500).json(err);
@@ -80,6 +81,7 @@ router.post('/login', (req, res) => {
         bcrypt
           .compare(password, user.password)
           .then(result => {
+            console.log(user.password);
             if (result) res.status(200).json(user);
             else
               res
@@ -93,5 +95,20 @@ router.post('/login', (req, res) => {
     }
   });
 });
+
+router.post('/logout', (req, res) => {
+  req.logout();
+
+  res.status(200).json('you have logged out');
+});
+//  router.post('/login', (req, res, next) => {
+// passport.authenticate('local', {
+//   successRedirect: res.status(200).json({ status: 'success' }),
+//   failureRedirect:res
+//   .status(404)
+//   .json({ status: 'email/password combo not found' }),
+//   failureFlash: true
+// })(req,res,next);
+// });
 
 module.exports = router;

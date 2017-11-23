@@ -8,10 +8,13 @@ import middleware from './middleware';
 import api from './api';
 import config from './config.json';
 import userRoutes from './api/users/routes';
+import passport from 'passport';
 
 let app = express();
 app.server = http.createServer(app);
 
+// Passport Congfig
+//require('./config/passport')(passport);
 // logger
 app.use(morgan('dev'));
 
@@ -30,12 +33,6 @@ app.use(
 
 app.use(express.static('build'));
 
-app.use('/user/', userRoutes);
-
-app.use(function(req, res) {
-  res.statusCode = 404;
-  res.send("Page doesn't exist");
-});
 // app.use("/", express.static("build"));
 
 // connect to db
@@ -44,7 +41,12 @@ initializeDb(db => {
   app.use(middleware({ config, db }));
 
   // api router
-  app.use('/api', api({ config, db }));
+  app.use('/user', api({ config, db }));
+
+  app.use(function(req, res) {
+    res.statusCode = 404;
+    res.send("Page doesn't exist");
+  });
 
   app.server.listen(process.env.PORT || config.port, () => {
     console.log(`Started on port ${app.server.address().port}`);
