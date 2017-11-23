@@ -15,7 +15,6 @@ class App extends Component {
         <header className="header">
         <div className="left">
           <img className="logo" alt=" "></img>
-          <a href='/' className="name">apocryphon</a>
         </div>
         <a href='/' className="right">
           Login
