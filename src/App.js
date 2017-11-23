@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 class App extends Component {
   render = () => {
     var { level, language } = this.props;     // redux
+    var currentWordImage = {
+      backgroundImage: "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2O4U1BhYSDu4aPavo_237sC0w0r2eDgVKHVjkDPFhjvnywFDn)"
+    }
     return (
       <div className="app">
         <header className="header">
@@ -21,7 +24,7 @@ class App extends Component {
 
         <div className="content">
           <div className="left">
-            <button className="button word active">demure</button>
+            <button className="button word active">whatifthewordissooofuckinglongwillthelayoutbreak</button>
             <button className="button word">deride</button>
             <button className="button word">diligent</button>
             <button className="button word">elated</button>
@@ -35,11 +38,11 @@ class App extends Component {
           <div className="center">
             <div className="title">Some title</div>
             <h1 className="current-word">DEMURE</h1>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2O4U1BhYSDu4aPavo_237sC0w0r2eDgVKHVjkDPFhjvnywFDn" className="current-image" alt=" "></img>
-            <div className="inputs">
-              <input id="current-word-guess"  className="input" placeholder="add the translated word"></input>
-              <button type="button" className="button">Need a hint?</button>
-              <button type="button" className="button">Submit</button>
+            <img style={currentWordImage} className="current-image" alt="" ></img>
+            <input id="current-word-guess"  className="input" placeholder="add the translated word"></input>
+            <div className="buttons">
+              <button type="button" className="button hint">Need a hint?</button>
+              <button type="button submit" className="button">Submit</button>
             </div>
           </div>
           <div className="right">
