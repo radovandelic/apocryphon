@@ -1,179 +1,222 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    font-size: 14px;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 14px;
 
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
+  a {
+    text-decoration: none;
+    color: inherit;
   }
-#root {
-    display: flex;
-    justify-content: center;
-
-    & .app {
-        max-width: 1000px;
-        width: 1000px;
-    }
 }
- @mixin transition {
-     transition: .15s all ease-in-out;
- } 
- $color1: #0084FF;
- $color1_c: #fff;
+#root {
+  display: flex;
+  justify-content: center;
 
- $color2: orange;
- $color2_c: #000;
+  & .app {
+    max-width: 1000px;
+    width: 1000px;
+    height: 100vh;
+  }
+}
+@mixin transition {
+  transition: 0.15s all ease-in-out;
+}
+$color1: #0084ff;
+$color1_c: #fff;
 
- $color3: orangered;
- $color3_c: #fff;
+$color2: orange;
+$color2_c: #000;
 
- $color4: lighten($color1, 20);
- $color4_c: #fff;
+$color3: orangered;
+$color3_c: #fff;
 
-  .header {
-    background: $color1;
-    color: white;
+$color4: lighten($color1, 20);
+$color4_c: #fff;
 
-    padding: 2px 20px;
+.header {
+  background: $color1;
+  color: white;
 
+  padding: 2px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & .left {
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
-      & .left {
-          display: flex;
-          align-items: center;
-
-        & .logo {
-            height: 66px;
-            width: 197px;
-            background-position: center;
-            background-image: url(./philariosLogo.svg);
-            background-repeat: no-repeat;
-            background-size: contain;
-        }
-        & .name {
-            text-transform: uppercase;
-            letter-spacing: 1.1;
-            font-weight: bold;
-            font-size: 120%;
-        }
-
-      }
+    & .logo {
+      height: 66px;
+      width: 197px;
+      background-position: center;
+      background-image: url(./philariosLogo.svg);
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+    & .name {
+      text-transform: uppercase;
+      letter-spacing: 1.1;
+      font-weight: bold;
+      font-size: 120%;
+    }
   }
+}
 
 .content {
-    padding: 20px;
-    
+  padding: 20px;
+
+  display: flex;
+
+  .left {
+    flex-basis: 200px;
+    max-width: 200px;
+
     display: flex;
+    flex-direction: column;
 
-    .left {
-        flex-basis: 200px;
-        max-width: 200px;
+    & button.word {
+      padding: 9px 10px;
+      margin: 2px 0;
 
-        display: flex;
-        flex-direction: column;
+      cursor: pointer;
 
-        & button.word {
-            padding: 9px 10px;
-            margin: 2px 0;
+      word-break: break-word;
 
-            cursor: pointer;
+      border: 1px solid $color1;
+      background: lighten($color1, 45);
+      color: $color1;
 
-            word-break: break-word;
+      @include transition;
 
-            border: 1px solid $color1;
-            background: lighten($color1, 45);
-            color: $color1;
-
-            @include transition;
-
-            &:hover,
-            &.active {
-                background: $color3;
-                color: $color3_c;
-                border: 1px solid $color3;
-            }
-        }
+      &:hover,
+      &.active {
+        background: $color3;
+        color: $color3_c;
+        border: 1px solid $color3;
+      }
     }
-    .center { 
+  }
+  .center {
+    flex: 1;
+    padding: 0 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    & .current-word {
+      color: $color3;
+    }
+
+    & .current-image {
+      height: 200px;
+      flex: 1;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+    & .input {
+      margin-top: 20px;
+      border: 1px solid $color3;
+      color: $color3;
+    }
+    & .buttons {
+      display: flex;
+
+      padding: 0 10px;
+      margin-top: 10px;
+
+      & .button {
         flex: 1;
-        padding: 0 20px;
 
-        display: flex;
-        flex-direction: column;
+        margin-bottom: 5px;
+        margin-right: 10px;
+        background: $color1;
+        color: $color1_c;
 
-        & .current-word {
-            color: $color3;
+        &:hover {
+          background: $color3;
+          color: $color3_c;
         }
+        &.hint {
+          background: $color4;
+          color: $color4_c;
 
-        & .current-image {
-            height: 200px;
-            flex: 1;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
+          &:hover {
+            background: darken($color4, 10);
+            color: $color4_c;
+          }
         }
-        & .input {
-            margin-top: 20px;
-            border: 1px solid $color3;
-            color: $color3;
-        }
-        & .buttons {
-            display: flex;
-            
-            padding: 0 10px;
-            margin-top: 10px;
-
-            & .button {
-                flex: 1;
-                
-                margin-bottom: 5px;
-                margin-right: 10px;
-                background: $color1;
-                color: $color1_c;
-                
-                &:hover {
-                    background: $color3;
-                    color: $color3_c;
-                }
-                &.hint {
-                    background: $color4;
-                    color: $color4_c;
-
-                    &:hover {
-                        background: darken($color4,10);
-                        color: $color4_c;
-                    }
-                }
-            }
-            & .button:last-child {
-                margin-right: 0;
-            }
-        }
+      }
+      & .button:last-child {
+        margin-right: 0;
+      }
     }
-    .right {
-        flex-basis: 200px;
-    }
+  }
+  .right {
+    flex-basis: 200px;
+  }
 }
-.input, 
+.input,
 .button {
-    padding: 7px 15px;
+  padding: 7px 15px;
 
-    &:hover {
-        cursor: pointer;
-    }
+  &:hover {
+    cursor: pointer;
+  }
 }
 .button {
-    border: none;
-    &:hover {
-        cursor: pointer;
-    }
+  border: none;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .input {
-    border: 1px solid grey;
-    cursor: text;
+  border: 1px solid grey;
+  cursor: text;
+}
+
+.landingPg_app {
+  display: flex;
+  flex-direction: column;
+
+  & .langSwitcher_boxes {
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    margin-bottom: 80px;
+
+    & .language_switcher {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      & .select {
+          margin-top: 5%;
+      }
+
+    & img.flag {
+    width: 33%;
+    margin-top: 5%;
+}
+    }
+  }
+
+  & .lpButton {
+    background-color: orange;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  & .landingPg_btn {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex: 1;
+  }
 }
