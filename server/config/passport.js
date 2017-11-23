@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 
 // brings in the data base
 const User = mongoose.model('users');
+// passport
 
 module.exports = function(passport) {
   passport.use(
