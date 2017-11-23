@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Level, Languages } from './containers';
 import { connect } from 'react-redux';
+import Header from "./components/Header";
+
 
 import { Link } from 'react-router-dom';
 
@@ -12,14 +14,7 @@ class App extends Component {
     }
     return (
       <div className="app">
-        <header className="header">
-        <div className="left">
-          <img className="logo" alt=" "></img>
-        </div>
-        <a href='/' className="right">
-          Login
-        </a>
-        </header>
+      <Header />
 
         <div className="content">
           <div className="left">
