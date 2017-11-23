@@ -37,7 +37,7 @@ body {
     background: $color1;
     color: white;
 
-    padding: 2px 20px 2px 0;
+    padding: 2px 20px;
 
     display: flex;
     align-items: center;
@@ -48,11 +48,12 @@ body {
           align-items: center;
 
         & .logo {
-            height: 40px;
-            width: 40px;
+            height: 66px;
+            width: 197px;
             background-position: center;
-            background-image: url(./logo.svg);
+            background-image: url(./philariosLogo.svg);
             background-repeat: no-repeat;
+            background-size: contain;
         }
         & .name {
             text-transform: uppercase;
