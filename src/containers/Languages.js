@@ -4,17 +4,17 @@ import { connect } from 'react-redux'
 export class Languages extends Component {
     render = () => {
         const { changeLanguage } = this.props;
-        var { language } = this.props;
+        var { languages } = this.props;
         return (
             <p>
-                <select defaultValue={language} id="languages" onChange={e => {
-                    language = e.target.value;
-                    changeLanguage(language)
+                <select defaultValue={languages} id="languages" onChange={e => {
+                    languages = e.target.value;
+                    changeLanguage(languages)
                 }}>
-                    <option value="dutch">Dutch</option>
-                    <option value="english">English</option>
-                    <option value="french">French</option>
-                    <option value="german">German</option>
+                    <option value="nl">Dutch</option>
+                    <option value="en">English</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
                 </select>
             </p>
         );
@@ -24,16 +24,16 @@ export class Languages extends Component {
 // Map Redux state to component props
 const mapStateToProps = state => {
     return {
-        language: state.language
+        language: state.languages
     }
 }
 
 // Map Redux actions to component props
 const mapDispatchToProps = dispatch => ({
-    changeLanguage(language) {
+    changeLanguage(languages) {
         dispatch({
-            type: "CHANGE_LANGUAGE",
-            language
+            type: "CHANGE_LANGUAGES",
+            languages
         })
     }
 })

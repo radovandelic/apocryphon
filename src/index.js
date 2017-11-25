@@ -6,14 +6,16 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './reducers';
-import Router from 'react-router';
+//import Router from 'react-router';
+
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const store = createStore(rootReducer);
 
 ReactDOM.render(
     <Provider store={store}>
-        {/* <Router> */}
-        <App />
-        {/* </Router> */}
+        <Router>
+            <App />
+        </Router>
     </Provider>, document.getElementById('root'));
 registerServiceWorker();

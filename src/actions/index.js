@@ -1,6 +1,6 @@
-export const changeLanguage = language => {
+export const changeOriginLanguage = language => {
     return {
-        type: 'CHANGE_LANGUAGE',
+        type: 'CHANGE_ORIGIN_LANGUAGE',
         language
     }
 }

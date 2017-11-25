@@ -1,11 +1,27 @@
-import { combineReducers } from 'redux'
-
-function languageReducer(state = 'english', action) {
+import { combineReducers } from 'redux';
+var wordlist = []
+for (var index = 0; index < 10; index++) {
+    wordlist.push({word: "loading...", "frequency": 0})
+}
+function languageReducer(state = { origin: 'en', target: 'en' }, action) {
     switch (action.type) {
         case 'CHANGE_LANGUAGE':
-            return action.language
+            if (action.direction === "origin") {
+                return { ...state, origin: action.language }
+            } else {
+                return { ...state, target: action.language }
+            }
         case 'RESET_LANGUAGE':
-            return 'english'
+            return { origin: 'en', target: 'en' }
+        default:
+            return state
+    }
+}
+
+function wordListReducer(state = wordlist, action) {
+    switch (action.type) {
+        case 'UPDATE_WORD_LIST':
+            return action.words;
         default:
             return state
     }
@@ -25,8 +41,9 @@ function levelReducer(state = 'noob', action) {
 
 
 const rootReducer = combineReducers({
-    language: languageReducer,
-    level: levelReducer
+    languages: languageReducer,
+    level: levelReducer,
+    words: wordListReducer
 });
 
 export default rootReducer;

@@ -1,3 +1,18 @@
+@mixin transition {
+  transition: 0.15s all ease-in-out;
+}
+$color1: #0084ff;
+$color1_c: #fff;
+
+$color2: #FF5E00;
+$color2_c: #fff;
+
+$color3: #FF3C00;
+$color3_c: #fff;
+
+$color4: lighten($color1, 20);
+$color4_c: #fff;
+
 body {
   margin: 0;
   padding: 0;
@@ -19,20 +34,6 @@ body {
     height: 100vh;
   }
 }
-@mixin transition {
-  transition: 0.15s all ease-in-out;
-}
-$color1: #0084ff;
-$color1_c: #fff;
-
-$color2: orange;
-$color2_c: #000;
-
-$color3: orangered;
-$color3_c: #fff;
-
-$color4: lighten($color1, 20);
-$color4_c: #fff;
 
 .header {
   background: $color1;
@@ -63,14 +64,40 @@ $color4_c: #fff;
       font-size: 120%;
     }
   }
+  & .right {
+    & a {
+      margin-right: 15px;
+      padding: 10px;
+      flex: 1;
+
+      background: $color1;
+      color: $color1_c;
+      border: 1px solid $color1;
+      @include transition;
+      
+      &:hover,
+      &.active {
+        background: $color2;
+        color: $color2_c;
+        border: 1px solid $color2_c;
+      }
+    }
+    & a:last-of-type {
+      margin-right: 0;
+    }
+  }
 }
 
 .content {
   padding: 20px;
 
   display: flex;
+  
+  & h1 {
+    color: $color3;
+  }
 
-  .left {
+  & .left {
     flex-basis: 200px;
     max-width: 200px;
 
@@ -162,6 +189,7 @@ $color4_c: #fff;
 .input,
 .button {
   padding: 7px 15px;
+  @include transition;    
 
   &:hover {
     cursor: pointer;
@@ -177,6 +205,13 @@ $color4_c: #fff;
   border: 1px solid grey;
   cursor: text;
 }
+// borders look like pencil sketches
+/* .button:after,
+.input:after {
+  border: 0.1em solid transparent;
+  border-image: url(images/pencil-border.jpg)
+  0 27 27 27 round stretch;
+} */
 
 .landingPg_app {
   display: flex;
@@ -187,7 +222,7 @@ $color4_c: #fff;
     flex: 1;
     justify-content: space-evenly;
     align-items: flex-end;
-    margin-bottom: 80px;
+    margin-bottom: 20px;
 
     & .language_switcher {
       display: flex;
@@ -199,9 +234,14 @@ $color4_c: #fff;
       }
 
     & img.flag {
-    width: 33%;
-    margin-top: 5%;
-}
+      width: 210px;
+      height: 157px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-top: 5%;
+      border: 1px solid #ccc;
+    }
     }
   }
 
@@ -218,5 +258,79 @@ $color4_c: #fff;
     align-items: flex-start;
     justify-content: center;
     flex: 1;
+  }
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+
+  & .flag_language {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    & .flag {
+      width: 50px;
+      height: 40px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-right: 15px;
+    }
+    & .language {
+      color: $color1;
+      font-size: 24px;
+    }
+  }
+
+  & .level-container {
+    border: 1px solid #ccc;
+    background: #F8F6F6;
+    padding: 20px;
+    margin-bottom: 10px;
+
+    display: flex;
+    align-items: center;
+    
+    &:last-child {
+      margin-bottom: 0px;
+    }
+    &:hover {
+      background: #F3F3F3;
+    }
+
+    & .level {
+      color: $color1;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+    
+    & .progress {
+      border: 1px solid #ccc;
+      color: $color2;
+      margin-right: 10px;
+      height: 15px;
+      flex: 1;
+      
+      display: flex;
+      
+      & .bar {
+        background: $color2;
+      }
+    }
+    & .percents {
+      color: $color2;
+      margin-right: 20px;
+    }
+    & .level_button {
+      background: $color1;
+      color: $color1_c;
+      
+      &:hover {
+        background: $color2;
+        color: $color2_c;
+      }
+    }
   }
 }
