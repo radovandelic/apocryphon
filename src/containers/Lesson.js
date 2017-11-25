@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import request from 'request';
 
 import { Route } from 'react-router-dom';
-var counter = 0;
-
 class Lesson extends Component {
     /*componentWillMount() {
         if(counter=== 0){
@@ -25,9 +23,6 @@ class Lesson extends Component {
     render = () => {
         var { languages, match, words } = this.props;
         var level = match.params.level;
-        setInterval(()=> {
-            console.log(words);
-        }, 1000);
         var currentWordImage = {
             backgroundImage: "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2O4U1BhYSDu4aPavo_237sC0w0r2eDgVKHVjkDPFhjvnywFDn)"
         }
@@ -39,14 +34,14 @@ class Lesson extends Component {
                     <h3>Language: {languages.target}</h3>
                     <button className="button word active">{words[0].word}</button>
                     <button className="button word">{words[1].word}</button>
-                    <button className="button word">diligent</button>
-                    <button className="button word">elated</button>
-                    <button className="button word">eloquent</button>
-                    <button className="button word">embezzle</button>
-                    <button className="button word">erudite</button>
-                    <button className="button word">erudite</button>
-                    <button className="button word">feral</button>
-                    <button className="button word">extol</button>
+                    <button className="button word">{words[2].word}</button>
+                    <button className="button word">{words[3].word}</button>
+                    <button className="button word">{words[4].word}</button>
+                    <button className="button word">{words[5].word}</button>
+                    <button className="button word">{words[6].word}</button>
+                    <button className="button word">{words[7].word}</button>
+                    <button className="button word">{words[8].word}</button>
+                    <button className="button word">{words[9].word}</button>
                 </div>
                 <div className="center">
                     <div className="title">Some title</div>
@@ -68,11 +63,11 @@ class Lesson extends Component {
 
     }
 }
-const mapStateToProps = state => {  // redux
-    return {                          // redux
-        languages: state.languages,        // redux
+const mapStateToProps = state => {
+    return {
+        languages: state.languages,
         level: state.level,
-        words: state.words        // redux
+        words: state.words
     }
 }
 const mapDispatchToProps = dispatch => ({
@@ -84,9 +79,9 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-Lesson = connect(                      // redux
-    mapStateToProps,                  // redux
-    mapDispatchToProps                              // redux
-)(Lesson)                              // redux
+Lesson = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Lesson)
 
 export default Lesson;

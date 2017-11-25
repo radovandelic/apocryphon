@@ -7,7 +7,6 @@ class LevelProgress extends Component {
     render() {
         var languages = { target: "de" }
         var { stage, level, progress, updateWordList } = this.props;
-        console.log(stage, level)
         return (
             <div className='level-container'>
                 <div className='level'>Level {level}</div>
@@ -18,8 +17,7 @@ class LevelProgress extends Component {
                 <Link to={`/lesson/${stage}/${level}`}>
                     <button onClick={e => {
                         request.get(`https://philarios.ml/api/words/${languages.target}/${stage}/${Number(level)}`, (err, data) => {
-                            console.log(err || data.body);
-                            updateWordList(data.body);
+                            updateWordList(err || JSON.parse(data.body));
                         });
                     }} className='button level_button'>Start Level</button>
                 </Link>
@@ -36,9 +34,9 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-LevelProgress = connect(   
-    null,                   // redux
-    mapDispatchToProps                              // redux
+LevelProgress = connect(
+    null,
+    mapDispatchToProps
 )(LevelProgress)
 
 export default LevelProgress;
