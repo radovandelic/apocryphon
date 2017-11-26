@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 
-import { connect } from 'react-redux';
-
 import LangSwitcher from "./LangSwitcher";
 
 class Landingpage extends Component {
   render() {
-    var { languages } = this.props;           
     return (
       <div className="content landingPg_app">
         <div className="langSwitcher_boxes">
@@ -25,15 +22,5 @@ class Landingpage extends Component {
     );
   }
 }
-
-const mapStateToProps = state => {
-  return {
-      languages: state.languages
-  }
-}
-Landingpage = connect(
-  mapStateToProps,
-  null
-)(Landingpage)
 
 export default Landingpage;

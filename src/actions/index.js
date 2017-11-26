@@ -11,3 +11,18 @@ export const changeLevel = level => {
         level
     }
 }
+
+export const updateWordList = words => {
+    return {
+        type: 'UPDATE_WORD_LIST',
+        words
+    }
+}
+
+export const updateTranslations = (words, translations) => {
+    return {
+        type: 'UPDATE_TRANSLATIONS',
+        words,
+        translations
+    }
+}

@@ -2,24 +2,8 @@ import React, { Component } from 'react';
 
 import { Level, Languages } from './';
 import { connect } from 'react-redux';
-import request from 'request';
 
-import { Route } from 'react-router-dom';
 class Lesson extends Component {
-    /*componentWillMount() {
-        if(counter=== 0){
-            counter++;
-            const { updateWordList } = this.props;
-            var { languages, match } = this.props;
-            var stage = match.params.stage;
-            var level = match.params.level;
-            request.get(`https://philarios.ml/api/words/${languages.target}/${stage}/${Number(level)}`, (err, data) => {
-                console.log(err || data.body);
-                updateWordList(data.body);
-            });
-        }
-
-    }*/
     render = () => {
         var { languages, match, words } = this.props;
         var level = match.params.level;
@@ -32,7 +16,7 @@ class Lesson extends Component {
                 <div className="left">
                     <h3>Level: {level}</h3>
                     <h3>Language: {languages.target}</h3>
-                    <button className="button word active">{words[0].word}</button>
+                    <button onClick={() => { console.log(words[0].translations) }} className="button word active">{words[0].word}</button>
                     <button className="button word">{words[1].word}</button>
                     <button className="button word">{words[2].word}</button>
                     <button className="button word">{words[3].word}</button>
