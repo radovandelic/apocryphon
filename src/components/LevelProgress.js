@@ -5,8 +5,9 @@ import request from 'request';
 
 class LevelProgress extends Component {
     render() {
-        var languages = { target: "de" }
-        var { stage, level, progress, updateWordList } = this.props;
+        //var languages = { target: "de" }
+        var { languages, stage, level, progress, updateWordList } = this.props;
+        console.log(languages);
         return (
             <div className='level-container'>
                 <div className='level'>Level {level}</div>

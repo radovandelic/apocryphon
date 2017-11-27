@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 
 import { Level, Languages } from './';
 import { connect } from 'react-redux';
-import request from 'request';
 
-import { Route } from 'react-router-dom';
 class Lesson extends Component {
     /*componentWillMount() {
         if(counter=== 0){

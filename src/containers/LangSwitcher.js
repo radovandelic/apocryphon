@@ -2,7 +2,9 @@ import React, { Component } from "react";
 
 import { connect } from 'react-redux'
 
-class LangSwitcher extends Component {
+import { flagAnimAdded } from '../sass/animations';
+
+class LangSwitcher extends Component {  
   render() {
     const { changeLanguage } = this.props;
     var { languages, direction } = this.props;
@@ -11,12 +13,21 @@ class LangSwitcher extends Component {
       <div className="language_switcher">
 
         <div className="description">Choose Your {direction} Language.</div>
-        <img src={`flags/${languages[direction]}.svg`} className='flag' alt=' '></img>
+        <img
+          src={`flags/${languages[direction]}.svg`}
+          className='flag'
+          id={`chosen-flag-${direction}`}
+          alt=' '>
+        </img>
         <div className="select">
-          <select defaultValue={languages.origin} id="languages" onChange={e => {
-            languages = e.target.value;
-             changeLanguage(languages, direction); 
-          }}>
+          <select
+            defaultValue={languages.origin}
+            id="languages"
+            onChange={e => {
+              languages = e.target.value;
+              changeLanguage(languages, direction);
+              flagAnimAdded(direction);
+            }}>
             <option value="af">Afrikaans </option>
             <option value="ar">Arabic </option>
             <option value="bg">Bulgarian </option>

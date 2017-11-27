@@ -1,3 +1,5 @@
+//@import './partials/_iconfonts.scss';
+
 @mixin transition {
   transition: 0.15s all ease-in-out;
 }
@@ -233,15 +235,34 @@ body {
           margin-top: 5%;
       }
 
-    & img.flag {
-      width: 210px;
-      height: 157px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      margin-top: 5%;
-      border: 1px solid #ccc;
-    }
+      & img.flag {
+        width: 210px;
+        height: 157px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-top: 5%;
+        border: 1px solid #ccc;
+
+        &.animate-origin,
+        &.animate-target {
+          animation: .5s flagAnim ease;
+        }
+        @keyframes flagAnim {
+          from, 20% {
+            transform: scale(0,0);
+            opacity: 0;
+          }
+          20%, 80% {
+            transform: scale(0,0);
+            opacity: 0;
+          }
+          80%, to {
+            transform: scale(1,1);
+            opacity: 1;
+          }
+        }
+      }
     }
   }
 
