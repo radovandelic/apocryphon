@@ -5,14 +5,17 @@ import { connect } from 'react-redux';
 
 import { lang } from '../models';
 
+import Popup from '../components/Popup';
+
 class Lesson extends Component {
     constructor(props) {
         super(props);
         this.state = {
             currentWordId: 0,
             translated: [null, null, null, null, null, null, null, null, null, null],
-            currentInput: null,
-            ifCorrect: false
+            correct: 0,
+            wrong: 0,
+            completed: false
         }
     }
     changeCurrentWordId = (currentWordId) => {
@@ -43,28 +46,36 @@ class Lesson extends Component {
             var buttons = document.getElementsByClassName('word');
             if (input === words[id].translations[i]) {
                 correct = 1;
-                
+
                 buttons[id].classList.add("correct");
-                
+
                 this.correctMessage();
                 this.disableWordButton(id);
-                //alert("correct");
+                this.updateTranslated(translated, id, correct);
+
                 return;
             } else {
+                correct = 0;
+                
                 buttons[id].classList.add("wrong");
                 
                 this.wrongMessage();
                 this.disableWordButton(id);
-                //alert("wrong");
+                this.updateTranslated(translated, id, correct);
+                return;
             }
         }
 
+        setTimeout(() => {
+            //console.log(this.state.translated[id]);
+        }, 200);
+        //console.log(correct ? "correct" : "wrong");
+    }
+    updateTranslated = (translated, id, correct) => {
         translated[id] = correct;
         this.setState({ translated: translated });
-        setTimeout(() => {
-            console.log(this.state.translated[id]);
-        }, 200);
-        console.log(correct ? "correct" : "wrong");
+
+        this.updateScore(translated);
     }
     disableWordButton = (id) => {
         var buttons = document.getElementsByClassName('word');
@@ -98,15 +109,42 @@ class Lesson extends Component {
         var correctMessageDiv = document.getElementById("wrong-message");
         correctMessageDiv.classList.remove("show");
     }
+    updateScore = (translated) => {
+
+        var correct = 0;
+        var wrong = 0;
+        var completed = 0;
+
+        translated.map((el, i) => {
+            if (el === 1) {
+                correct++;
+                completed++;
+                this.setState({ correct: correct });
+            }
+            if (el === 0) {
+                wrong++;
+                this.setState({ wrong: wrong });
+                completed++;
+            }
+            if (completed === 10) {
+                this.setState({ completed: true });
+            }
+        })
+        console.log("corr " + correct);
+        console.log("wrong " + wrong);
+        console.log("compl " + completed);
+    }
     render = () => {
         var { languages, match, words } = this.props;
         var level = match.params.level;
         var currentWordImage = {
             backgroundImage: "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2O4U1BhYSDu4aPavo_237sC0w0r2eDgVKHVjkDPFhjvnywFDn)"
         }
-        console.log(this.state.input);
+        //console.log(this.state.input);
+        //console.log(this.state.translated);
         return (
             <div className="content lesson">
+                {this.state.completed ? <Popup correct={this.state.correct} wrong={this.state.wrong}/> : ''}
                 <div className="left">
                     <div className="level-text">Level:</div>
                     <div className="level-number">{level}</div>
