@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Level, Languages } from './';
 import { connect } from 'react-redux';
 
+import { lang } from '../models';
+
 class Lesson extends Component {
     constructor(props) {
         super(props);
@@ -43,6 +45,7 @@ class Lesson extends Component {
                 buttons[id].classList.add("correct");
 
                 this.correctMessage();
+                this.disableCorrectButton(id);
             }
         }
         translated[id] = correct;
@@ -51,6 +54,10 @@ class Lesson extends Component {
             console.log(this.state.translated[id]);
         }, 200);
         console.log(correct ? "correct" : "wrong");
+    }
+    disableCorrectButton = (id) => {
+        var buttons = document.getElementsByClassName('word');
+        buttons[id].setAttribute("disabled", "true");
     }
     correctMessage = () => {
         var correctMessageDiv = document.getElementById("correct-message");
@@ -78,8 +85,12 @@ class Lesson extends Component {
         return (
             <div className="content lesson">
                 <div className="left">
-                    <h3>Level: {level}</h3>
-                    <h3>Language: {languages.target}</h3>
+                    <div className="level-text">Level:</div>
+                    <div className="level-number">{level}</div>
+                    <div className='flag_language'>
+                        <img src={`/flags/${languages.target}.svg`} className='flag' alt=' '></img>
+                        <div className='language'>{lang[languages.target].name}</div>
+                    </div>
                     <button id="0" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word active">{words[0].word}</button>
                     <button id="1" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word">{words[1].word}</button>
                     <button id="2" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word">{words[2].word}</button>
@@ -92,9 +103,9 @@ class Lesson extends Component {
                     <button id="9" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word">{words[9].word}</button>
                 </div>
                 <div className="center">
-                <img style={currentWordImage} className="current-image" alt="" ></img>
-                <div className="current-word">{words[this.state.currentWordId].word}</div>
-                <div id="correct-message" className="correct-message">Correct answer!</div>
+                    <img style={currentWordImage} className="current-image" alt="" ></img>
+                    <div className="current-word">{words[this.state.currentWordId].word}</div>
+                    <div id="correct-message" className="correct-message">Correct answer!</div>
                     <input onChange={e => this.setState({ input: e.target.value })} id="current-word-guess" className="input" placeholder="add the translated word"></input>
                     <div className="buttons">
                         <button type="button" className="button hint">Need a hint?</button>
