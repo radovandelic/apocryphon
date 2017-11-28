@@ -3,6 +3,9 @@
 @mixin transition {
   transition: 0.35s all ease-in-out;
 }
+@mixin box-shadow {
+  box-shadow: 1px 1px 10px rgba(0,0,0,.75);
+}
 $color1: #0084ff;
 $color1_c: #fff;
 
@@ -17,6 +20,9 @@ $color4_c: #fff;
 
 $color5: green;
 $color5_c: white;
+
+$color6: red;
+$color6_c: white;
 
 body {
   margin: 0;
@@ -93,7 +99,8 @@ body {
   }
 }
 
-.content {
+.content,
+.lesson {
   padding: 20px;
 
   display: flex;
@@ -108,6 +115,38 @@ body {
 
     display: flex;
     flex-direction: column;
+
+    & .level-text,
+    & .level-number {
+      text-align: center;
+      background: $color1_c;
+      color: $color1;
+      font-weight: bold;
+    }
+    & .level-text {
+      background: $color3_c;
+      color: $color3;  
+    }
+    & .level-number {
+      font-size: 45px;
+      margin-bottom: 10px;
+    }
+
+
+    & .flag_language {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      & .flag {
+        width: 100%;
+        max-width: 90px;
+        margin-bottom: 4px;
+      }
+      & .language {
+        margin-bottom: 10px;
+      }
+    }
 
     & button.word {
       padding: 9px 10px;
@@ -133,6 +172,10 @@ body {
         background: $color5;
         color: $color5_c;
       }
+      &.wrong {
+        background: $color6;
+        color: $color6_c;
+      }
     }
   }
   .center {
@@ -144,7 +187,8 @@ body {
     & .title {
       text-align: center;
     }
-    & .correct-message {
+    & .correct-message,
+    & .wrong-message {
       height: 0;
       opacity: 0;
       padding: 5px 10px 0 10px;
@@ -153,7 +197,14 @@ body {
       font-weight: bold;
       overflow: hidden;
       @include transition;
-
+      
+      &.show {
+        height: 30px;
+        opacity: 1;
+      }
+    }
+    & .wrong-message {
+      color: $color6;
       &.show {
         height: 30px;
         opacity: 1;
@@ -184,6 +235,13 @@ body {
         background: $color5;
         color: $color5_c;
         border: 1px solid $color5;
+        //transform: scale(1.05,1.05) rotate(1deg);
+        animation: .3s correctInput ease;
+      }
+      &.wrong {
+        background: $color6;
+        color: $color6_c;
+        border: 1px solid $color6;
         //transform: scale(1.05,1.05) rotate(1deg);
         animation: .3s correctInput ease;
       }
@@ -399,5 +457,86 @@ body {
         color: $color2_c;
       }
     }
+  }
+}
+
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.85);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & .popup {
+    max-width: 300px;
+    border-radius: 10px;
+    background: #fff;
+
+    @include box-shadow;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    padding: 40px 30px;
+    box-sizing: border-box;
+
+    animation: .35s showPopup linear;
+
+    & .congrats-message {
+      color: $color3;
+      font-weight: bold;
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    & .score-message {
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+    & .correct {
+      color: $color5;
+      font-size: 16px;
+      margin-bottom: 3px;
+    }
+    & .wrong {
+      font-size: 16px;
+      color: $color6;
+      margin-bottom: 15px;
+    }
+    & .button {
+      background: $color1;
+      color: $color1_c;
+      
+      &:hover {
+        background: $color2;
+        color: $color2_c;
+      }
+    }
+  }
+  @keyframes showPopup {
+    from {
+      transform: scale(0.2,0.2);
+      opacity: 0;
+    }
+    65% {
+      transform: scale(0.8,0.8);
+      opacity: .95;
+    }
+    80% {
+      transform: scale(1.1,1.1);
+      opacity: 1;
+    }
+    to {
+      transform: rotateX(0deg) scale(1,1);
+      opacity: 1;
+    }
+
   }
 }

@@ -3,14 +3,19 @@ import React, { Component } from 'react';
 import { Level, Languages } from './';
 import { connect } from 'react-redux';
 
+import { lang } from '../models';
+
+import Popup from '../components/Popup';
+
 class Lesson extends Component {
     constructor(props) {
         super(props);
         this.state = {
             currentWordId: 0,
             translated: [null, null, null, null, null, null, null, null, null, null],
-            currentInput: null,
-            ifCorrect: false
+            correct: 0,
+            wrong: 0,
+            completed: false
         }
     }
     changeCurrentWordId = (currentWordId) => {
@@ -18,6 +23,7 @@ class Lesson extends Component {
         this.setState({ currentWordId });
         this.setActive(currentWordId);
         this.removeCorrectClass();
+        this.removeWrongClass();
         this.clearInput();
     }
     setActive = (id) => {
@@ -35,22 +41,45 @@ class Lesson extends Component {
         var id = this.state.currentWordId;
         var input = this.state.input;
         var correct = 0;
+
         for (var i in words[id].translations) {
+            var buttons = document.getElementsByClassName('word');
             if (input === words[id].translations[i]) {
                 correct = 1;
 
-                var buttons = document.getElementsByClassName('word');
                 buttons[id].classList.add("correct");
 
                 this.correctMessage();
+                this.disableWordButton(id);
+                this.updateTranslated(translated, id, correct);
+
+                return;
+            } else {
+                correct = 0;
+                
+                buttons[id].classList.add("wrong");
+                
+                this.wrongMessage();
+                this.disableWordButton(id);
+                this.updateTranslated(translated, id, correct);
+                return;
             }
         }
+
+        setTimeout(() => {
+            //console.log(this.state.translated[id]);
+        }, 200);
+        //console.log(correct ? "correct" : "wrong");
+    }
+    updateTranslated = (translated, id, correct) => {
         translated[id] = correct;
         this.setState({ translated: translated });
-        setTimeout(() => {
-            console.log(this.state.translated[id]);
-        }, 200);
-        console.log(correct ? "correct" : "wrong");
+
+        this.updateScore(translated);
+    }
+    disableWordButton = (id) => {
+        var buttons = document.getElementsByClassName('word');
+        buttons[id].setAttribute("disabled", "true");
     }
     correctMessage = () => {
         var correctMessageDiv = document.getElementById("correct-message");
@@ -59,14 +88,51 @@ class Lesson extends Component {
         var input = document.getElementById("current-word-guess");
         input.classList.add("correct");
     }
+    wrongMessage = () => {
+        var correctMessageDiv = document.getElementById("wrong-message");
+        correctMessageDiv.classList.add("show");
+
+        var input = document.getElementById("current-word-guess");
+        input.classList.add("wrong");
+    }
     clearInput = () => {
         var input = document.getElementById("current-word-guess");
         input.value = "";
         input.classList.remove("correct");
+        input.classList.remove("wrong");
     }
     removeCorrectClass = () => {
         var correctMessageDiv = document.getElementById("correct-message");
         correctMessageDiv.classList.remove("show");
+    }
+    removeWrongClass = () => {
+        var correctMessageDiv = document.getElementById("wrong-message");
+        correctMessageDiv.classList.remove("show");
+    }
+    updateScore = (translated) => {
+
+        var correct = 0;
+        var wrong = 0;
+        var completed = 0;
+
+        translated.map((el, i) => {
+            if (el === 1) {
+                correct++;
+                completed++;
+                this.setState({ correct: correct });
+            }
+            if (el === 0) {
+                wrong++;
+                this.setState({ wrong: wrong });
+                completed++;
+            }
+            if (completed === 10) {
+                this.setState({ completed: true });
+            }
+        })
+        console.log("corr " + correct);
+        console.log("wrong " + wrong);
+        console.log("compl " + completed);
     }
     render = () => {
         var { languages, match, words } = this.props;
@@ -74,12 +140,18 @@ class Lesson extends Component {
         var currentWordImage = {
             backgroundImage: "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2O4U1BhYSDu4aPavo_237sC0w0r2eDgVKHVjkDPFhjvnywFDn)"
         }
-        console.log(this.state.input);
+        //console.log(this.state.input);
+        //console.log(this.state.translated);
         return (
             <div className="content lesson">
+                {this.state.completed ? <Popup correct={this.state.correct} wrong={this.state.wrong}/> : ''}
                 <div className="left">
-                    <h3>Level: {level}</h3>
-                    <h3>Language: {languages.target}</h3>
+                    <div className="level-text">Level:</div>
+                    <div className="level-number">{level}</div>
+                    <div className='flag_language'>
+                        <img src={`/flags/${languages.target}.svg`} className='flag' alt=' '></img>
+                        <div className='language'>{lang[languages.target].name}</div>
+                    </div>
                     <button id="0" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word active">{words[0].word}</button>
                     <button id="1" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word">{words[1].word}</button>
                     <button id="2" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word">{words[2].word}</button>
@@ -92,9 +164,10 @@ class Lesson extends Component {
                     <button id="9" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word">{words[9].word}</button>
                 </div>
                 <div className="center">
-                <img style={currentWordImage} className="current-image" alt="" ></img>
-                <div className="current-word">{words[this.state.currentWordId].word}</div>
-                <div id="correct-message" className="correct-message">Correct answer!</div>
+                    <img style={currentWordImage} className="current-image" alt="" ></img>
+                    <div className="current-word">{words[this.state.currentWordId].word}</div>
+                    <div id="correct-message" className="correct-message">Correct answer!</div>
+                    <div id="wrong-message" className="wrong-message">Wrong answer!</div>
                     <input onChange={e => this.setState({ input: e.target.value })} id="current-word-guess" className="input" placeholder="add the translated word"></input>
                     <div className="buttons">
                         <button type="button" className="button hint">Need a hint?</button>
