@@ -18,6 +18,9 @@ $color4_c: #fff;
 $color5: green;
 $color5_c: white;
 
+$color6: red;
+$color6_c: white;
+
 body {
   margin: 0;
   padding: 0;
@@ -166,6 +169,10 @@ body {
         background: $color5;
         color: $color5_c;
       }
+      &.wrong {
+        background: $color6;
+        color: $color6_c;
+      }
     }
   }
   .center {
@@ -177,7 +184,8 @@ body {
     & .title {
       text-align: center;
     }
-    & .correct-message {
+    & .correct-message,
+    & .wrong-message {
       height: 0;
       opacity: 0;
       padding: 5px 10px 0 10px;
@@ -186,7 +194,14 @@ body {
       font-weight: bold;
       overflow: hidden;
       @include transition;
-
+      
+      &.show {
+        height: 30px;
+        opacity: 1;
+      }
+    }
+    & .wrong-message {
+      color: $color6;
       &.show {
         height: 30px;
         opacity: 1;
@@ -217,6 +232,13 @@ body {
         background: $color5;
         color: $color5_c;
         border: 1px solid $color5;
+        //transform: scale(1.05,1.05) rotate(1deg);
+        animation: .3s correctInput ease;
+      }
+      &.wrong {
+        background: $color6;
+        color: $color6_c;
+        border: 1px solid $color6;
         //transform: scale(1.05,1.05) rotate(1deg);
         animation: .3s correctInput ease;
       }
