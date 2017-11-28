@@ -8,6 +8,7 @@ import { lang } from '../models';
 class Dashboard extends Component {
     render() {
         var { languages } = this.props;
+        console.log(languages)
         return (
             <div className='content dashboard'>
                 <h1>Your Dashboard</h1>
@@ -16,13 +17,10 @@ class Dashboard extends Component {
                     <div className='language'>{lang[languages.target].name}</div>
                 </div>
                 <LevelProgress stage='0' level='1' progress='83%' />
-                <LevelProgress stage='0' level='2' progress='43%' />
-                <LevelProgress stage='0' level='3' progress='27%' />
-                <LevelProgress stage='0' level='4' progress='3%' />
-                <LevelProgress stage='0' level='5' progress='3%' />
-                <LevelProgress stage='0' level='6' progress='3%' />
-                <LevelProgress stage='0' level='7' progress='3%' />
-                <LevelProgress stage='0' level='8' progress='3%' />
+                <LevelProgress stage='0' level='2' progress='73%' />
+                <LevelProgress stage='0' level='3' progress='43%' />
+                <LevelProgress stage='0' level='4' progress='23%' />
+                <LevelProgress stage='0' level='5' progress='13%' />
             </div>
         )
     }
