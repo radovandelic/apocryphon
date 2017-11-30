@@ -25,12 +25,13 @@ class Lesson extends Component {
 
         document.addEventListener('keydown', (e) => {
             if ((13 === e.keyCode)) {
-                /*if (e.target.value.length > 0)*/ this.checkAnswer();
+                this.checkAnswer();
             }
         })
 
     }
     checkAnswer = () => {
+        if (!this.state.input) return;
         var { words } = this.props;
         var translated = this.state.translated;
         var id = this.state.currentWordId;
