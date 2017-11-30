@@ -8,15 +8,17 @@ import middleware from './middleware';
 import api from './api';
 import config from './config.json';
 import userRoutes from './api/users/routes';
-import passport from 'passport';
+var cookieParser = require('cookie-parser');
+var User = require('./api/users/model');
+var bcrypt = require('bcrypt'),
+  SALT_WORK_FACTOR = 10;
+
 var session = require('client-sessions');
 var User = require('./api/users/model');
 
 let app = express();
 app.server = http.createServer(app);
 
-// Passport Congfig
-//require('./config/passport')(passport);
 // logger
 app.use(morgan('dev'));
 
