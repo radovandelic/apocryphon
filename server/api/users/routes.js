@@ -2,6 +2,25 @@ var router = require('express').Router();
 var User = require('./model');
 var bcrypt = require('bcrypt');
 const passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+router.post('/create', (req, res) => {
+  var user = req.body;
+  console.log(req.body);
+  bcrypt.hash(user.password, 8, (err, hash) => {
+    if (err) {
+      res.status(500).json(err);
+    }
+    user.password = hash;
+    User.create(user)
+      .then(user => {
+        res.status(200).json(user);
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
+  });
+});
 
 router.post('/create', (req, res) => {
   var user = req.body;
@@ -69,7 +88,10 @@ router.delete('/:id/delete', (req, res) => {
 });
 
 // login //
-router.post('/login', (req, res) => {
+router.post('/login', passport.authenticate('login',{
+  
+}, (req, res) => {
+  console.log('passport is working', req.user);
   console.log('sessions:', req.session);
   var email = req.body.email;
   var password = req.body.password;
@@ -100,12 +122,13 @@ router.post('/login', (req, res) => {
   });
 });
 
-router.post('/logout', (req, res) => {
-  console.log('seesion before log out', req.session);
+router.get('/user/loggedin', (req, res) => {
+  res.send(req.isAuthenticated() ? req.user : '0');
+});
 
+router.post('/logout', (req, res) => {
   req.session.reset();
   req.logout();
-  console.log('seesion after logging out', req.session);
 
   res.status(200).json('you have logged out');
 });
@@ -118,5 +141,12 @@ router.post('/logout', (req, res) => {
 //   failureFlash: true
 // })(req,res,next);
 // });
+function isLoggedIn(req, res, next) {
+      // if user is authenticated in the session, carry on 
+      if (req.isAuthenticated())
+          return next();
+      // if they aren't redirect them to the home page
+      res.status(404).json({ status: 'Your are not logged in.' });
+  }
 
 module.exports = router;

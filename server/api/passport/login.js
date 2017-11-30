@@ -1,4 +1,6 @@
 var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var User = require('./model');
 passport.use(
   'login',
   new LocalStrategy(
@@ -12,7 +14,7 @@ passport.use(
         if (err) return done(err);
         // Username does not exist, log error & redirect back
         if (!user) {
-          console.log('User Not Found with username ' + username);
+          console.log('User Not Found with username ' + user.name);
           return done(null, false, req.flash('message', 'User Not found.'));
         }
         // User exists but wrong password, log the error

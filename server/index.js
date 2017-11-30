@@ -9,6 +9,12 @@ import api from './api';
 import config from './config.json';
 import userRoutes from './api/users/routes';
 import passport from 'passport';
+var LocalStrategy = require('passport-local').Strategy;
+var cookieParser = require('cookie-parser');
+var User = require('./api/users/model');
+var bcrypt = require('bcrypt'),
+  SALT_WORK_FACTOR = 10;
+
 var session = require('client-sessions');
 var User = require('./api/users/model');
 
@@ -16,9 +22,66 @@ let app = express();
 app.server = http.createServer(app);
 
 // Passport Congfig
-//require('./config/passport')(passport);
+require('./config/passport')(passport);
 // logger
 app.use(morgan('dev'));
+
+//
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
+
+User.pre('save', next => {
+  var user = this;
+
+  // only hash the password if it has been modified (or is new)
+  if (!user.isModified('password')) return next();
+
+  // generate a salt
+  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    if (err) return next(err);
+
+    // hash the password along with our new salt
+    bcrypt.hash(user.password, salt, function(err, hash) {
+      if (err) return next(err);
+
+      // override the cleartext password with the hashed one
+      user.password = hash;
+      next();
+    });
+  });
+});
+//// I added this for passport
+app.use(
+  passport.use(
+    new LocalStrategy(function(username, password, done) {
+      User.findOne({ username: username, password: password }, function(
+        err,
+        user
+      ) {
+        if (err) {
+          return done(err);
+        }
+        if (!user) {
+          return done(null, false);
+        }
+        return done(null, user);
+        console.log(user);
+      });
+    })
+  )
+);
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  User.findById(user._id, function(err, use) {
+    done(err, user);
+  });
+});
+/////
 
 //this is for cookied sessions
 app.use(
