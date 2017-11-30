@@ -1,18 +1,22 @@
 import React, { Component } from "react";
-import Header from "../components/Header";
+import { Link } from 'react-router-dom';
+
 import LangSwitcher from "./LangSwitcher";
 
 class Landingpage extends Component {
   render() {
     return (
-      <div className="app landingPg_app">
-        <Header />
+      <div className="content landingPg_app">
         <div className="langSwitcher_boxes">
-          <LangSwitcher />
-          <LangSwitcher />
+          <LangSwitcher direction="origin" />
+          <LangSwitcher direction="target" />
         </div>
         <div className="landingPg_btn">
-          <input type="button" class="lpButton button" value="SUBMIT" />
+          <div>
+            <Link to='/dashboard'>
+              <button className="lpButton button">Start</button>
+            </Link>
+          </div>
         </div>
       </div>
     );

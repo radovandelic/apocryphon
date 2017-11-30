@@ -75,7 +75,7 @@ module.exports = {
         .replace(/\\/g, '/'),
   },
   externals: {
-    react: {
+    'react': {
       root: 'React',
       commonjs2: 'react',
       commonjs: 'react',
@@ -86,7 +86,11 @@ module.exports = {
       commonjs2: 'react-dom',
       commonjs: 'react-dom',
       amd: 'react-dom'
-    }
+    },
+    'react-router': 'react-router',
+    'react-router-dom': 'react-router-dom',
+    'react-redux': 'react-redux',
+    'redux': 'redux'
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.

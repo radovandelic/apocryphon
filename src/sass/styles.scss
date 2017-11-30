@@ -1,3 +1,29 @@
+//@import './partials/_iconfonts.scss';
+
+@mixin transition {
+  transition: 0.35s all ease-in-out;
+}
+@mixin box-shadow {
+  box-shadow: 1px 1px 10px rgba(0,0,0,.75);
+}
+$color1: #0084ff;
+$color1_c: #fff;
+
+$color2: #FF5E00;
+$color2_c: #fff;
+
+$color3: #FF3C00;
+$color3_c: #fff;
+
+$color4: lighten($color1, 20);
+$color4_c: #fff;
+
+$color5: green;
+$color5_c: white;
+
+$color6: red;
+$color6_c: white;
+
 body {
   margin: 0;
   padding: 0;
@@ -19,20 +45,6 @@ body {
     height: 100vh;
   }
 }
-@mixin transition {
-  transition: 0.15s all ease-in-out;
-}
-$color1: #0084ff;
-$color1_c: #fff;
-
-$color2: orange;
-$color2_c: #000;
-
-$color3: orangered;
-$color3_c: #fff;
-
-$color4: lighten($color1, 20);
-$color4_c: #fff;
 
 .header {
   background: $color1;
@@ -63,19 +75,78 @@ $color4_c: #fff;
       font-size: 120%;
     }
   }
+  & .right {
+    & a {
+      margin-right: 15px;
+      padding: 10px;
+      flex: 1;
+
+      background: $color1;
+      color: $color1_c;
+      border: 1px solid $color1;
+      @include transition;
+      
+      &:hover,
+      &.active {
+        background: $color2;
+        color: $color2_c;
+        border: 1px solid $color2_c;
+      }
+    }
+    & a:last-of-type {
+      margin-right: 0;
+    }
+  }
 }
 
-.content {
+.content,
+.lesson {
   padding: 20px;
 
   display: flex;
+  
+  & h1 {
+    color: $color3;
+  }
 
-  .left {
+  & .left {
     flex-basis: 200px;
     max-width: 200px;
 
     display: flex;
     flex-direction: column;
+
+    & .level-text,
+    & .level-number {
+      text-align: center;
+      background: $color1_c;
+      color: $color1;
+      font-weight: bold;
+    }
+    & .level-text {
+      background: $color3_c;
+      color: $color3;  
+    }
+    & .level-number {
+      font-size: 45px;
+      margin-bottom: 10px;
+    }
+
+
+    & .flag_language {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      & .flag {
+        width: 100%;
+        max-width: 90px;
+        margin-bottom: 4px;
+      }
+      & .language {
+        margin-bottom: 10px;
+      }
+    }
 
     & button.word {
       padding: 9px 10px;
@@ -97,6 +168,14 @@ $color4_c: #fff;
         color: $color3_c;
         border: 1px solid $color3;
       }
+      &.correct {
+        background: $color5;
+        color: $color5_c;
+      }
+      &.wrong {
+        background: $color6;
+        color: $color6_c;
+      }
     }
   }
   .center {
@@ -105,9 +184,38 @@ $color4_c: #fff;
 
     display: flex;
     flex-direction: column;
-
+    & .title {
+      text-align: center;
+    }
+    & .correct-message,
+    & .wrong-message {
+      height: 0;
+      opacity: 0;
+      padding: 5px 10px 0 10px;
+      color: $color5;
+      text-align: center;
+      font-weight: bold;
+      overflow: hidden;
+      @include transition;
+      
+      &.show {
+        height: 30px;
+        opacity: 1;
+      }
+    }
+    & .wrong-message {
+      color: $color6;
+      &.show {
+        height: 30px;
+        opacity: 1;
+      }
+    }
     & .current-word {
       color: $color3;
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      margin-top: 10px;
     }
 
     & .current-image {
@@ -118,9 +226,34 @@ $color4_c: #fff;
       background-size: contain;
     }
     & .input {
-      margin-top: 20px;
       border: 1px solid $color3;
       color: $color3;
+      font-size: 30px;
+      text-align: center;
+      //@include transition();
+      &.correct {
+        background: $color5;
+        color: $color5_c;
+        border: 1px solid $color5;
+        //transform: scale(1.05,1.05) rotate(1deg);
+        animation: .3s correctInput ease;
+      }
+      &.wrong {
+        background: $color6;
+        color: $color6_c;
+        border: 1px solid $color6;
+        //transform: scale(1.05,1.05) rotate(1deg);
+        animation: .3s correctInput ease;
+      }
+      @keyframes correctInput {
+        from { transform: rotate(0deg) };
+        10% { transform: rotate(2deg) };
+        25% { transform: rotate(-1deg) };
+        45% { transform: rotate(1deg) };
+        70% { transform: rotate(-2deg) };
+        85% { transform: rotate(1deg) };
+        100% { transform: rotate(0deg) };
+      }
     }
     & .buttons {
       display: flex;
@@ -162,6 +295,7 @@ $color4_c: #fff;
 .input,
 .button {
   padding: 7px 15px;
+  @include transition;    
 
   &:hover {
     cursor: pointer;
@@ -177,6 +311,13 @@ $color4_c: #fff;
   border: 1px solid grey;
   cursor: text;
 }
+// borders look like pencil sketches
+/* .button:after,
+.input:after {
+  border: 0.1em solid transparent;
+  border-image: url(images/pencil-border.jpg)
+  0 27 27 27 round stretch;
+} */
 
 .landingPg_app {
   display: flex;
@@ -187,7 +328,7 @@ $color4_c: #fff;
     flex: 1;
     justify-content: space-evenly;
     align-items: flex-end;
-    margin-bottom: 80px;
+    margin-bottom: 20px;
 
     & .language_switcher {
       display: flex;
@@ -198,10 +339,34 @@ $color4_c: #fff;
           margin-top: 5%;
       }
 
-    & img.flag {
-    width: 33%;
-    margin-top: 5%;
-}
+      & img.flag {
+        width: 210px;
+        height: 157px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-top: 5%;
+        border: 1px solid #ccc;
+
+        &.animate-origin,
+        &.animate-target {
+          animation: .5s flagAnim ease;
+        }
+        @keyframes flagAnim {
+          from, 20% {
+            transform: scale(0,0);
+            opacity: 0;
+          }
+          20%, 80% {
+            transform: scale(0,0);
+            opacity: 0;
+          }
+          80%, to {
+            transform: scale(1,1);
+            opacity: 1;
+          }
+        }
+      }
     }
   }
 
@@ -218,5 +383,160 @@ $color4_c: #fff;
     align-items: flex-start;
     justify-content: center;
     flex: 1;
+  }
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+
+  & .flag_language {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    & .flag {
+      width: 50px;
+      height: 40px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-right: 15px;
+    }
+    & .language {
+      color: $color1;
+      font-size: 24px;
+    }
+  }
+
+  & .level-container {
+    border: 1px solid #ccc;
+    background: #F8F6F6;
+    padding: 20px;
+    margin-bottom: 10px;
+
+    display: flex;
+    align-items: center;
+    
+    &:last-child {
+      margin-bottom: 0px;
+    }
+    &:hover {
+      background: #F3F3F3;
+    }
+
+    & .level {
+      color: $color1;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+    
+    & .progress {
+      border: 1px solid #ccc;
+      color: $color2;
+      margin-right: 10px;
+      height: 15px;
+      flex: 1;
+      
+      display: flex;
+      
+      & .bar {
+        background: $color2;
+      }
+    }
+    & .percents {
+      color: $color2;
+      margin-right: 20px;
+    }
+    & .level_button {
+      background: $color1;
+      color: $color1_c;
+      
+      &:hover {
+        background: $color2;
+        color: $color2_c;
+      }
+    }
+  }
+}
+
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.85);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & .popup {
+    max-width: 300px;
+    border-radius: 10px;
+    background: #fff;
+
+    @include box-shadow;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    padding: 40px 30px;
+    box-sizing: border-box;
+
+    animation: .35s showPopup linear;
+
+    & .congrats-message {
+      color: $color3;
+      font-weight: bold;
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    & .score-message {
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+    & .correct {
+      color: $color5;
+      font-size: 16px;
+      margin-bottom: 3px;
+    }
+    & .wrong {
+      font-size: 16px;
+      color: $color6;
+      margin-bottom: 15px;
+    }
+    & .button {
+      background: $color1;
+      color: $color1_c;
+      
+      &:hover {
+        background: $color2;
+        color: $color2_c;
+      }
+    }
+  }
+  @keyframes showPopup {
+    from {
+      transform: scale(0.2,0.2);
+      opacity: 0;
+    }
+    65% {
+      transform: scale(0.8,0.8);
+      opacity: .95;
+    }
+    80% {
+      transform: scale(1.1,1.1);
+      opacity: 1;
+    }
+    to {
+      transform: rotateX(0deg) scale(1,1);
+      opacity: 1;
+    }
+
   }
 }
