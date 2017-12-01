@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.6",
+    "axios": "^0.17.1",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
@@ -64,7 +65,7 @@
     "start-win": "start node scripts/start.js && npm run win-server",
     "build": "node scripts/build.js",
     "test": "eslint src",
-    "server": "NODE_ENV=development nodemon -w server --exec \"babel-node server --presets es2015,stage-0\"",
+    "server": "nodemon -w server --exec \"babel-node server --presets es2015,stage-0\"",
     "build-server": "babel server -s -D -d dist --presets es2015,stage-0",
     "prestart-prod": "NODE_ENV=production npm run -s build-server",
     "start-prod": "NODE_ENV=production node dist",

@@ -10,7 +10,11 @@ router.post('/create', (req, res) => {
     if (err) {
       res.status(500).json(err);
     }
-    user.password = hash;
+    bcrypt.compare(user.password, hash, (err, result) => {
+      if (err) {throw (err); }
+      console.log("create results ", result);
+    })    
+   user.password = hash;
     User.create(user)
       .then(user => {
         res.status(200).json(user);
@@ -75,13 +79,17 @@ router.post('/login', (req, res) => {
   var password = req.body.password;
   console.log(email, password);
   User.findOne({ email: email }, (err, user) => {
+    console.log(" this is the user", user)
     if (err) {
       res.status(500).json(err);
     } else {
       if (user) {
+        console.log(user);
         bcrypt
           .compare(password, user.password)
           .then(result => {
+            console.log(result);
+            console.log(password);
             console.log(user.password);
             if (result) {
               req.session.user = user;

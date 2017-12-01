@@ -19,6 +19,7 @@ class LevelProgress extends Component {
                     translations[i].err = err ? err : undefined;
                     translations[i].translations = data ? JSON.parse(data.body) : undefined;
                     i++;
+                    console.log(translations[i]);
                     getTranslations(wordlist, i);
                 })
             } else {

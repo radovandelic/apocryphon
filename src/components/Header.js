@@ -9,8 +9,9 @@ class Header extends Component {
           <NavLink to='/landingpage' className="logo" alt=" "></NavLink>
         </div>
         <div className="right">
-          <NavLink to='/landingpage'>Login</NavLink>
-          <NavLink to='/landingpage'>Sign Up</NavLink>
+          <NavLink to='/login'>Login</NavLink>
+          <NavLink to='/logout'>Logout</NavLink>
+          <NavLink to='/register'>Sign Up</NavLink>
           <NavLink to='/dashboard'>Dashboard</NavLink>
         </div>
       </header>
