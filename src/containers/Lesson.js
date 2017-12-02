@@ -204,7 +204,9 @@ class Lesson extends Component {
                         <button type="button" className="button hint">Need a hint?</button>
                         <button onClick={this.checkAnswer} type="button submit" className="button">Check!</button>
                     </div>
-                    <img src={this.state.currentWordImage} className="current-image" alt="" ></img>
+                    <div className="img-container">
+                        <img src={this.state.currentWordImage} className="current-image" alt="" ></img>
+                    </div>
                 </div>
             </div>
         )
