@@ -30,9 +30,14 @@ body {
   font-family: sans-serif;
   font-size: 14px;
 
-  a {
+  & a {
     text-decoration: none;
-    color: inherit;
+    color: $color1;
+    font-weight: bold;
+    
+    &:hover {
+      color: $color2;
+    }
   }
 }
 #root {
@@ -167,6 +172,12 @@ body {
         background: $color3;
         color: $color3_c;
         border: 1px solid $color3;
+        animation: .5s focusWord linear;
+      }
+      @keyframes focusWord {
+        from {transform: scale(1,1)}
+        75% {transform: scale(1.1,1.1)}
+        to {transform: scale(1,1)}
       }
       &.correct {
         background: $color5;
@@ -302,10 +313,15 @@ body {
   }
 }
 .button {
-  border: none;
-  &:hover {
-    cursor: pointer;
-  }
+    background: $color1;
+    color: $color1_c;
+    border: none;
+    
+    &:hover {
+      cursor: pointer;
+      background: $color2;
+      color: $color2_c;
+    }
 }
 .input {
   border: 1px solid grey;
@@ -460,6 +476,27 @@ body {
   }
 }
 
+.login,
+.register {
+  flex-direction: column;
+
+  & form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin-bottom: 20px;
+
+    & label {
+      margin-bottom: 5px;
+      text-indent: 10px;
+    }
+    & input {
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 16px;
+    }
+  }
+}
 .popup-container {
   position: fixed;
   top: 0;
