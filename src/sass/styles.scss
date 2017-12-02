@@ -228,13 +228,17 @@ body {
       font-weight: bold;
       margin-top: 10px;
     }
+    & .img-container {
+      height: 50vh;
+      width: 70vh;
 
-    & .current-image {
-      height: 200px;
-      flex: 1;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
+      display: flex;
+      align-self: center;
+      justify-content: center;
+
+      & .current-image {
+        height: 100%;
+      }
     }
     & .input {
       border: 1px solid $color3;
