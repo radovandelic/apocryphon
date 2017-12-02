@@ -28,9 +28,9 @@ class Lesson extends Component {
         this.fetchImages(this.currentWord());
     }
     componentDidUpdate = () => {
-        if(this.state.lastWordId !== this.state.currentWordId ){
+        if (this.state.lastWordId !== this.state.currentWordId) {
             this.fetchImages(this.currentWord());
-            this.setState({lastWordId: this.state.currentWordId})
+            this.setState({ lastWordId: this.state.currentWordId })
         }
     }
     currentWord = () => {
