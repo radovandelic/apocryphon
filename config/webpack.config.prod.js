@@ -87,10 +87,30 @@ module.exports = {
       commonjs: 'react-dom',
       amd: 'react-dom'
     },
-    'react-router': 'react-router',
-    'react-router-dom': 'react-router-dom',
-    'react-redux': 'react-redux',
-    'redux': 'redux'
+    'react-router': {
+      root: 'ReactRouter',
+      commonjs2: 'react-router',
+      commonjs: 'react-router',
+      amd: 'react-router'
+    },
+    'react-router-dom': {
+      root: 'ReactRouterDOM',
+      commonjs2: 'react-router-dom',
+      commonjs: 'react-router-dom',
+      amd: 'react-router-dom'
+    },
+    'react-redux': {
+      root: 'ReactRedux',
+      commonjs2: 'react-redux',
+      commonjs: 'react-redux',
+      amd: 'react-redux'
+    },
+    'redux': {
+      root: 'Redux',
+      commonjs2: 'redux',
+      commonjs: 'redux',
+      amd: 'redux'
+    }
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
