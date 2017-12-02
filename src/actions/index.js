@@ -18,7 +18,6 @@ export const updateWordList = words => {
         words
     }
 }
-
 export const updateTranslations = (words, translations) => {
     return {
         type: 'UPDATE_TRANSLATIONS',
