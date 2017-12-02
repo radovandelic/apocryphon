@@ -25,3 +25,10 @@ export const updateTranslations = (words, translations) => {
         translations
     }
 }
+
+export const updateImages = (images) => {
+    return {
+        type: 'UPDATE_IMAGES',
+        images
+    }
+}

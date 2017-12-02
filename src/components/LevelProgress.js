@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import request from 'request';
 import translate from '../externals/translate';
-import { updateWordList, updateTranslations } from '../actions';
+import { updateWordList, updateTranslations, updateImages } from '../actions';
 
 class LevelProgress extends Component {
     render() {
-        var { languages, stage, level, progress, updateWordList, updateTranslations } = this.props;
+        var { languages, stage, level, progress, updateWordList, updateTranslations, updateImages } = this.props;
         var translations = [];
+        var images = [];
+        for (let i = 0; i < 10; i++) {
+            translations[i] = {};
+        }
         var getTranslations = (wordlist, i) => {
             if (wordlist.errors) {
                 console.log(wordlist.errors);
@@ -19,12 +23,26 @@ class LevelProgress extends Component {
                     translations[i].err = err ? err : undefined;
                     translations[i].translations = data ? JSON.parse(data.body) : undefined;
                     i++;
-                    console.log(translations[i]);
+                    updateTranslations(wordlist, translations);
                     getTranslations(wordlist, i);
                 })
             } else {
-                updateTranslations(wordlist, translations);
                 translations = [];
+            }
+        }
+        var getImages = (wordlist, i) => {
+            if (wordlist[i]) {
+                translate(languages.target, 'en', wordlist[i].word, (err, data) => {
+                    var word = JSON.parse(data.body)[0];
+                    request.get(`https://www.philarios.ml/api/images/${word}`, (err, data) => {
+                        images[i] = JSON.parse(data.body);
+                        i++;
+                        updateImages(images);
+                        getImages(wordlist, i);
+                    })
+                })
+            } else {
+                images = []
             }
         }
         return (
@@ -37,8 +55,11 @@ class LevelProgress extends Component {
                 <Link to={`/lesson/${stage}/${level}`}>
                     <button onClick={e => {
                         request.get(`https://philarios.ml/api/words/${languages.target}/${stage}/${Number(level)}`, (err, data) => {
-                            updateWordList(err || JSON.parse(data.body));
-                            if (!err) getTranslations(JSON.parse(data.body), 0);
+                            var wordlist = JSON.parse(data.body);
+                            images = [];
+                            getImages(wordlist, 0);
+                            updateWordList(err || wordlist);
+                            if (!err) getTranslations(wordlist, 0);
                         });
                     }} className='button level_button'>Start Level</button>
                 </Link>
@@ -50,7 +71,8 @@ class LevelProgress extends Component {
 
 const mapStateToProps = state => {
     return {
-        languages: state.languages
+        languages: state.languages,
+        words: state.words
     }
 }
 
@@ -61,6 +83,9 @@ const mapDispatchToProps = dispatch => {
         },
         updateWordList: (words) => {
             dispatch(updateWordList(words));
+        },
+        updateImages: (images) => {
+            dispatch(updateImages(images));
         }
     }
 }

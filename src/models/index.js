@@ -472,4 +472,20 @@ export const lang = {
         "wikiUrl": "https://en.wikipedia.org/wiki/Chinese_language"
     }
 }
+export const flags = {
+    "en": "UK", "ca": "CT", "ar": "EG", "ps": "AF", "sq": "AL", "hy": "AM", "ru": "RU", "pt": "PT", "es": "ES",
+    "sm": "AS", "de": "DE", "nl": "NL", "sv": "SE", "az": "AZ", "bs": "BA", "cr": "BA", "sr": "RS", "bn": "BD",
+    "fr": "FR", "bg": "BG", "ms": "BN", "ay": "BO", "qu": "BO", "dz": "BT", "tn": "BW", "be": "BY", "ln": "CD",
+    "kg": "CD", "sw": "UG", "sg": "CF", "it": "IT", "rm": "CH", "mi": "CK", "zh": "CN", "el": "GR", "tr": "TR",
+    "cs": "CZ", "da": "DK", "et": "EE", "ti": "ER", "am": "ET", "fi": "FI", "fj": "FJ", "fo": "FO", "kw": "GB",
+    "ga": "IE", "gd": "GB", "cy": "GB", "ka": "GE", "gl": "GL", "hr": "HR", "ht": "HT", "hu": "HU", "id": "ID",
+    "he": "IL", "gv": "IM", "hi": "IN", "ku": "IQ", "fa": "IR", "is": "IS", "ja": "JP", "km": "KH", "ko": "KP",
+    "kk": "KZ", "lo": "LA", "si": "LK", "ta": "LK", "st": "LS", "lt": "LT", "lb": "LU", "lv": "LV", "ro": "RO",
+    "mg": "MG", "mh": "MH", "mk": "MK", "my": "MM", "mn": "MN", "mt": "MT", "dv": "MV", "ny": "MW", "no": "NO",
+    "ne": "NP", "na": "NR", "ur": "PK", "pl": "PL", "rw": "RW", "sl": "SI", "sk": "SK", "so": "SO", "ss": "SZ",
+    "th": "TH", "tg": "TJ", "tk": "TM", "uk": "UA", "uz": "UZ", "vi": "VN", "bi": "VU", "af": "ZA", "nr": "ZA",
+    "ts": "ZA", "ve": "ZA", "xh": "ZA", "zu": "ZA", "sn": "ZW", "nd": "ZW", "eo": "EO", "eu": "EU", "ml": "IN",
+    "te": "IN", "tl": "PH"
+};
+
 export default lang;

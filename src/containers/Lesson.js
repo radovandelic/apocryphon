@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
-
-import { Level, Languages } from './';
 import { connect } from 'react-redux';
-
 import { lang } from '../models';
-
 import Popup from '../components/Popup';
-
-import axios from 'axios';
+import { flags } from '../models'
 
 class Lesson extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lastWordId: -1,
             currentWordId: 0,
-            currentWordImage: 'http://www.vermeer.com.au/wp-content/uploads/2016/12/attachment-no-image-available.png',
             translated: [null, null, null, null, null, null, null, null, null, null],
             correct: 0,
             wrong: 0,
@@ -25,26 +18,10 @@ class Lesson extends Component {
     }
     componentDidMount = () => {
         this.enterIsSubmit();
-        this.fetchImages(this.currentWord());
-    }
-    componentDidUpdate = () => {
-        if (this.state.lastWordId !== this.state.currentWordId) {
-            this.fetchImages(this.currentWord());
-            this.setState({ lastWordId: this.state.currentWordId })
-        }
     }
     currentWord = () => {
         var { words } = this.props;
         return words[this.state.currentWordId].word;
-    }
-    fetchImages = (word) => {
-        axios.get(`https://www.philarios.ml/api/images/${word}`)
-            .then(res => {
-                this.setState({ currentWordImage: res.data })
-                console.log(res.data)
-                console.log(this.state.currentWordImage)
-            })
-            .catch(error => console.error(error))
     }
     enterIsSubmit = () => {
         document.addEventListener('keydown', (e) => {
@@ -59,12 +36,10 @@ class Lesson extends Component {
         var { words } = this.props;
         var translated = this.state.translated;
         var id = this.state.currentWordId;
-        console.log(id);
         var input = this.state.input;
 
         var correct = 0;
         var buttons = document.getElementsByClassName('word');
-        console.log(words[id].translations)
         for (var i in words[id].translations) {
 
             if (input.trim() === words[id].translations[i]) {
@@ -75,15 +50,12 @@ class Lesson extends Component {
                 this.correctMessage();
             }
         }
-        if (correct == 0) {
+        if (!correct) {
             buttons[id].classList.add("wrong");
             this.wrongMessage();
         }
         this.disableWordButton(id);
         this.updateTranslated(translated, id, correct);
-
-        //console.log(id);
-        //this.changeCurrentWordId(id + 1);
     }
     changeCurrentWordId = (currentWordId) => {
         //if (currentWordId === 10) return;
@@ -166,11 +138,10 @@ class Lesson extends Component {
             if (completed === 10) {
                 this.setState({ completed: true });
             }
-            return;
         })
     }
     render = () => {
-        var { languages, match, words } = this.props;
+        var { languages, match, words, images } = this.props;
         var level = match.params.level;
         return (
             <div className="content lesson">
@@ -179,7 +150,7 @@ class Lesson extends Component {
                     <div className="level-text">Level:</div>
                     <div className="level-number">{level}</div>
                     <div className='flag_language'>
-                        <img src={`/flags/${languages.target}.svg`} className='flag' alt=' '></img>
+                        <img src={`/flags/${flags[languages.target].toLowerCase()}.svg`} className='flag' alt=' '></img>
                         <div className='language'>{lang[languages.target].name}</div>
                     </div>
                     <button id="0" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word active">{words[0].word}</button>
@@ -205,7 +176,7 @@ class Lesson extends Component {
                         <button onClick={this.checkAnswer} type="button submit" className="button">Check!</button>
                     </div>
                     <div className="img-container">
-                        <img src={this.state.currentWordImage} className="current-image" alt="" ></img>
+                        <img src={images[this.state.currentWordId]} className="current-image" alt="" ></img>
                     </div>
                 </div>
             </div>
@@ -217,7 +188,8 @@ const mapStateToProps = state => {
     return {
         languages: state.languages,
         level: state.level,
-        words: state.words
+        words: state.words,
+        images: state.images
     }
 }
 const mapDispatchToProps = dispatch => ({
