@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from 'react-router-dom';
 
-import LangSwitcher from "./LangSwitcher";
+import LangSwitcher from "../containers/LangSwitcher";
 
-class Landingpage extends Component {
-  render() {
+const Landingpage = () => {
     return (
       <div className="content landingPg_app">
         <div className="langSwitcher_boxes">
@@ -20,7 +19,6 @@ class Landingpage extends Component {
         </div>
       </div>
     );
-  }
 }
 
 export default Landingpage;

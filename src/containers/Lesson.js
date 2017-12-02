@@ -19,28 +19,27 @@ class Lesson extends Component {
             input: ''
         }
     }
-
     componentDidMount = () => {
-        this.focusInput();
-
         document.addEventListener('keydown', (e) => {
             if ((13 === e.keyCode)) {
                 this.checkAnswer();
             }
         })
-
+        this.focusInput();
+        //setTimeout(this.focusInput(), 350);
     }
     checkAnswer = () => {
         if (!this.state.input) return;
         var { words } = this.props;
         var translated = this.state.translated;
         var id = this.state.currentWordId;
+        console.log(id);
         var input = this.state.input;
 
         var correct = 0;
+        var buttons = document.getElementsByClassName('word');
         console.log(words[id].translations)
         for (var i in words[id].translations) {
-            var buttons = document.getElementsByClassName('word');
 
             if (input.trim() === words[id].translations[i]) {
                 correct = 1;
@@ -56,8 +55,12 @@ class Lesson extends Component {
         }
         this.disableWordButton(id);
         this.updateTranslated(translated, id, correct);
+
+        //console.log(id);
+        //this.changeCurrentWordId(id + 1);
     }
     changeCurrentWordId = (currentWordId) => {
+        //if (currentWordId === 10) return;
         this.removeActive();
         this.setState({ currentWordId });
         this.setActive(currentWordId);
