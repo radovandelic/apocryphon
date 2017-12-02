@@ -7,11 +7,15 @@ import { lang } from '../models';
 
 import Popup from '../components/Popup';
 
+import axios from 'axios';
+
 class Lesson extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            lastWordId: -1,
             currentWordId: 0,
+            currentWordImage: 'http://www.vermeer.com.au/wp-content/uploads/2016/12/attachment-no-image-available.png',
             translated: [null, null, null, null, null, null, null, null, null, null],
             correct: 0,
             wrong: 0,
@@ -20,13 +24,35 @@ class Lesson extends Component {
         }
     }
     componentDidMount = () => {
+        this.enterIsSubmit();
+        this.fetchImages(this.currentWord());
+    }
+    componentDidUpdate = () => {
+        if(this.state.lastWordId !== this.state.currentWordId ){
+            this.fetchImages(this.currentWord());
+            this.setState({lastWordId: this.state.currentWordId})
+        }
+    }
+    currentWord = () => {
+        var { words } = this.props;
+        return words[this.state.currentWordId].word;
+    }
+    fetchImages = (word) => {
+        axios.get(`https://www.philarios.ml/api/images/${word}`)
+            .then(res => {
+                this.setState({ currentWordImage: res.data })
+                console.log(res.data)
+                console.log(this.state.currentWordImage)
+            })
+            .catch(error => console.error(error))
+    }
+    enterIsSubmit = () => {
         document.addEventListener('keydown', (e) => {
             if ((13 === e.keyCode)) {
                 this.checkAnswer();
             }
         })
         this.focusInput();
-        //setTimeout(this.focusInput(), 350);
     }
     checkAnswer = () => {
         if (!this.state.input) return;
@@ -146,8 +172,11 @@ class Lesson extends Component {
     render = () => {
         var { languages, match, words } = this.props;
         var level = match.params.level;
+        console.log("xx");
+        console.log(this.state.currenWordImage);
+        var cWi = this.state.currenWordImage;
         var currentWordImage = {
-            backgroundImage: "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2O4U1BhYSDu4aPavo_237sC0w0r2eDgVKHVjkDPFhjvnywFDn)"
+            backgroundImage: `url(${cWi})`
         }
         return (
             <div className="content lesson">
@@ -171,7 +200,7 @@ class Lesson extends Component {
                     <button id="9" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word">{words[9].word}</button>
                 </div>
                 <div className="center">
-                    <img style={currentWordImage} className="current-image" alt="" ></img>
+                    <img src={this.state.currentWordImage} className="current-image" alt="" ></img>
                     <div className="current-word">{words[this.state.currentWordId].word}</div>
                     <div id="correct-message" className="correct-message">Correct answer!</div>
                     <div id="wrong-message" className="wrong-message">Wrong answer!</div>
