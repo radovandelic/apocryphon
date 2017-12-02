@@ -28,9 +28,9 @@ class Lesson extends Component {
         this.fetchImages(this.currentWord());
     }
     componentDidUpdate = () => {
-        if(this.state.lastWordId !== this.state.currentWordId ){
+        if (this.state.lastWordId !== this.state.currentWordId) {
             this.fetchImages(this.currentWord());
-            this.setState({lastWordId: this.state.currentWordId})
+            this.setState({ lastWordId: this.state.currentWordId })
         }
     }
     currentWord = () => {
@@ -172,12 +172,6 @@ class Lesson extends Component {
     render = () => {
         var { languages, match, words } = this.props;
         var level = match.params.level;
-        console.log("xx");
-        console.log(this.state.currenWordImage);
-        var cWi = this.state.currenWordImage;
-        var currentWordImage = {
-            backgroundImage: `url(${cWi})`
-        }
         return (
             <div className="content lesson">
                 {this.state.completed ? <Popup correct={this.state.correct} wrong={this.state.wrong} /> : ''}
@@ -200,7 +194,6 @@ class Lesson extends Component {
                     <button id="9" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word">{words[9].word}</button>
                 </div>
                 <div className="center">
-                    <img src={this.state.currentWordImage} className="current-image" alt="" ></img>
                     <div className="current-word">{words[this.state.currentWordId].word}</div>
                     <div id="correct-message" className="correct-message">Correct answer!</div>
                     <div id="wrong-message" className="wrong-message">Wrong answer!</div>
@@ -211,12 +204,8 @@ class Lesson extends Component {
                         <button type="button" className="button hint">Need a hint?</button>
                         <button onClick={this.checkAnswer} type="button submit" className="button">Check!</button>
                     </div>
+                    <img src={this.state.currentWordImage} className="current-image" alt="" ></img>
                 </div>
-                <div className="right">
-                    <Languages />
-                    <Level />
-                    right sidebar
-            </div>
             </div>
         )
 
