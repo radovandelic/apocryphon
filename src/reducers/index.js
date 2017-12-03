@@ -30,7 +30,7 @@ var wordlist = []
 var imageList = []
 for (let index = 0; index < 10; index++) {
     wordlist.push({ word: "loading...", frequency: 0, translations: ['loading...', 'loading...'] });
-    imageList.push("http://www.vermeer.com.au/wp-content/uploads/2016/12/attachment-no-image-available.png");
+    imageList.push("https://www.vermeer.com.au/wp-content/uploads/2016/12/attachment-no-image-available.png");
 }
 function wordListReducer(state = wordlist, action) {
     switch (action.type) {
