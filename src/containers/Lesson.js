@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { lang } from '../models';
 import Popup from '../components/Popup';
-import { flags } from '../models'
+import { flags } from '../models';
+import { updateWordList, updateProgress } from '../actions';
 
 class Lesson extends Component {
     constructor(props) {
@@ -13,10 +14,16 @@ class Lesson extends Component {
             correct: 0,
             wrong: 0,
             completed: false,
-            input: ''
+            input: '',
+            stage: -1,
+            level: -1
         }
     }
     componentDidMount = () => {
+        var { match } = this.props;
+        var level = match.params.level;
+        var stage = match.params.stage;
+        this.setState({ level: level, stage: stage });
         this.enterIsSubmit();
     }
     currentWord = () => {
@@ -44,7 +51,7 @@ class Lesson extends Component {
 
             if (input.trim() === words[id].translations[i]) {
                 correct = 1;
-
+                words[id].grade = words[id].grade ? words[id].grade + 1 : 1;
                 buttons[id].classList.add("correct");
 
                 this.correctMessage();
@@ -119,7 +126,9 @@ class Lesson extends Component {
         correctMessageDiv.classList.remove("show");
     }
     updateScore = (translated) => {
-
+        const { words, languages } = this.props;
+        const stage = this.state.stage;
+        const level = this.state.level;
         var correct = 0;
         var wrong = 0;
         var completed = 0;
@@ -137,18 +146,22 @@ class Lesson extends Component {
             }
             if (completed === 10) {
                 this.setState({ completed: true });
+                var stages = languages.stages;
+                stages[stage].levels[level].words = words;
+                updateProgress(words, stages, stage, level);
             }
         })
     }
     render = () => {
         var { languages, match, words, images } = this.props;
         var level = match.params.level;
+
         return (
             <div className="content lesson">
                 {this.state.completed ? <Popup correct={this.state.correct} wrong={this.state.wrong} /> : ''}
                 <div className="left">
                     <div className="level-text">Level:</div>
-                    <div className="level-number">{level}</div>
+                    <div className="level-number">{Number(level) + 1}</div>
                     <div className='flag_language'>
                         <img src={`/flags/${flags[languages.target].toLowerCase()}.svg`} className='flag' alt=' '></img>
                         <div className='language'>{lang[languages.target].name}</div>
@@ -192,14 +205,17 @@ const mapStateToProps = state => {
         images: state.images
     }
 }
-const mapDispatchToProps = dispatch => ({
-    updateWordList(words) {
-        dispatch({
-            type: "UPDATE_WORD_LIST",
-            words
-        })
+
+const mapDispatchToProps = dispatch => {
+    return {
+        updateWordList: (words) => {
+            dispatch(updateWordList(words));
+        },
+        updateProgress: (words, stages, stage, level) => {
+            dispatch(updateProgress(words, stages, stage, level));
+        }
     }
-})
+}
 
 Lesson = connect(
     mapStateToProps,

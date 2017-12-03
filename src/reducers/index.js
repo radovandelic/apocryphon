@@ -1,6 +1,20 @@
 import { combineReducers } from 'redux';
 
-function languageReducer(state = { origin: 'en', target: 'en' }, action) {
+var wordlist = []
+var imageList = []
+for (let index = 0; index < 10; index++) {
+    wordlist.push({ word: "loading...", frequency: 0, translations: ['loading...', 'loading...'] });
+    imageList.push("https://www.vermeer.com.au/wp-content/uploads/2016/12/attachment-no-image-available.png");
+}
+var initStages = []
+for (let i = 0; i < 200; i++) {
+    initStages[i] = { levels: [] }
+    for (let j = 0; j < 10; j++) {
+        initStages[i].levels[j] = { words: [] }
+    }
+}
+
+function languageReducer(state = { origin: 'en', target: 'en', stages: initStages }, action) {
     switch (action.type) {
         case 'CHANGE_LANGUAGE':
             if (action.direction === "origin") {
@@ -8,6 +22,8 @@ function languageReducer(state = { origin: 'en', target: 'en' }, action) {
             } else {
                 return { ...state, target: action.language }
             }
+        case 'UPDATE_PROGRESS':
+            return { ...state, stages: action.stages }
         case 'RESET_LANGUAGE':
             return { origin: 'en', target: 'en' }
         default:
@@ -26,12 +42,6 @@ function levelReducer(state = 'noob', action) {
     }
 }
 
-var wordlist = []
-var imageList = []
-for (let index = 0; index < 10; index++) {
-    wordlist.push({ word: "loading...", frequency: 0, translations: ['loading...', 'loading...'] });
-    imageList.push("https://www.vermeer.com.au/wp-content/uploads/2016/12/attachment-no-image-available.png");
-}
 function wordListReducer(state = wordlist, action) {
     switch (action.type) {
         case 'UPDATE_WORD_LIST':

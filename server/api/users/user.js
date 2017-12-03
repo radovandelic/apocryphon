@@ -23,10 +23,21 @@ const UserSchema = new Schema({
     type: Number,
     required: false
   },
-  languages: {
-    type: Array,
-    required: false
-  },
+  languages: [{
+    origin: {
+      type: String,
+      required: true
+    },
+    target: {
+      type: String,
+      required: true
+    },
+    stages: [{
+      levels: [{
+        words: Array
+      }]
+    }]
+  }],
   date: {
     type: Date,
     default: Date.now

@@ -56,14 +56,14 @@ class LevelProgress extends Component {
         }
         return (
             <div className='level-container'>
-                <div className='level'>Level {level}</div>
+                <div className='level'>Level {Number(level) + 1}</div>
                 <div className='progress'>
                     <div className='bar' style={{ width: progress }}></div>
                 </div>
                 <div className='percents'>{progress}</div>
                 <Link to={`/lesson/${stage}/${level}`}>
                     <button onClick={e => {
-                        request.get(`https://philarios.ml/api/words/${languages.target}/${stage}/${Number(level)}`, (err, data) => {
+                        request.get(`https://philarios.ml/api/words/${languages.target}/${stage}/${level}`, (err, data) => {
                             var wordlist = JSON.parse(data.body);
                             images = [];
                             getImages(wordlist, 0);
