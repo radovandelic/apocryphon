@@ -1,11 +1,22 @@
 //@import './partials/_iconfonts.scss';
 
+
 @mixin transition {
   transition: 0.35s all ease-in-out;
 }
 @mixin box-shadow {
   box-shadow: 1px 1px 10px rgba(0,0,0,.75);
 }
+
+@mixin sketchInput {    
+    border: 0.1em solid transparent;
+    border-image: url('http://emptyeasel.com/wp-content/uploads/2012/11/creatingtexture2-carrielewis.jpg') 25 stretch round;
+    content: '';
+    height: auto;
+    transform: rotate(0deg);
+}
+
+
 $color1: #0084ff;
 $color1_c: #fff;
 
@@ -23,6 +34,24 @@ $color5_c: white;
 
 $color6: red;
 $color6_c: white;
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+input:-webkit-autofill, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: inherit;
+  background-color: inherit;
+  -webkit-box-shadow: inherit;
+  transition: inherit;
+}
+
 
 body {
   margin: 0;
@@ -160,18 +189,17 @@ body {
       cursor: pointer;
 
       word-break: break-word;
-
-      border: 1px solid $color1;
       background: lighten($color1, 45);
       color: $color1;
 
       @include transition;
+      @include sketchInput;      
 
       &:hover,
       &.active {
         background: $color3;
         color: $color3_c;
-        border: 1px solid $color3;
+        //border: 1px solid $color3;
         animation: .5s focusWord linear;
       }
       @keyframes focusWord {
@@ -241,11 +269,8 @@ body {
       }
     }
     & .input {
-      border: 1px solid $color3;
-      color: $color3;
-      font-size: 30px;
       text-align: center;
-      //@include transition();
+      @include sketchInput;
       &.correct {
         background: $color5;
         color: $color5_c;
@@ -275,6 +300,7 @@ body {
 
       padding: 0 10px;
       margin-top: 10px;
+      
 
       & .button {
         flex: 1;
@@ -283,7 +309,7 @@ body {
         margin-right: 10px;
         background: $color1;
         color: $color1_c;
-
+        
         &:hover {
           background: $color3;
           color: $color3_c;
@@ -307,37 +333,7 @@ body {
     flex-basis: 200px;
   }
 }
-.input,
-.button {
-  padding: 7px 15px;
-  @include transition;    
 
-  &:hover {
-    cursor: pointer;
-  }
-}
-.button {
-    background: $color1;
-    color: $color1_c;
-    border: none;
-    
-    &:hover {
-      cursor: pointer;
-      background: $color2;
-      color: $color2_c;
-    }
-}
-.input {
-  border: 1px solid grey;
-  cursor: text;
-}
-// borders look like pencil sketches
-/* .button:after,
-.input:after {
-  border: 0.1em solid transparent;
-  border-image: url(images/pencil-border.jpg)
-  0 27 27 27 round stretch;
-} */
 
 .landingPg_app {
   display: flex;
@@ -498,6 +494,10 @@ body {
       margin-bottom: 15px;
       padding: 10px;
       font-size: 16px;
+      position: relative;
+      border-width: 1px;
+      border-color: transparent;
+      @include sketchInput;
     }
   }
 }
@@ -579,5 +579,84 @@ body {
       opacity: 1;
     }
 
+  }
+}
+
+select,
+input,
+.input,
+.button {
+  outline: none;
+  padding: 7px 15px;
+  @include transition;  
+  @include sketchInput;
+
+  &:-webkit-autofill {
+    background-color: $color3;
+    color: $color3_c;
+  }
+  &:focus {
+    outline: none;
+    background: $color3;
+    color: $color3_c;
+
+    &::placeholder {
+      background: inherit;
+      color: inherit;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    background: $color3;
+    color: $color3_c;
+    
+    &::placeholder {
+      background: inherit;
+      color: inherit;
+    }
+  }
+
+}
+.button {
+    background: $color1;
+    color: $color1_c;
+    //border: none;
+    
+    &:not(.disabled):hover {
+      cursor: pointer;
+      background: $color2;
+      color: $color2_c;
+    }
+    &.disabled {
+      background: #666;
+      color: #999;
+    }
+}
+.label {
+  &:focus {
+    &.valid {
+      color: white;
+      background: green;
+    }
+    &.invalid {
+      color: white;
+      background: red;
+    }
+  }
+}
+.input {
+  &::placeholder {
+    color: inherit;
+    background: inherit;
+  }
+  &:focus {
+    &.valid {
+      color: white;
+      background: green;
+    }
+    &.invalid {
+      color: white;
+      background: red;
+    }
   }
 }

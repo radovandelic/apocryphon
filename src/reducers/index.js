@@ -56,11 +56,21 @@ function imageReducer(state = imageList, action) {
     }
 }
 
+function isLoggedInReducer(state = null, action) {
+    switch (action.type) {
+        case 'IS_LOGGED_IN':
+            return action.data;
+        default:
+            return state
+    }
+}
+
 const rootReducer = combineReducers({
     languages: languageReducer,
     level: levelReducer,
     words: wordListReducer,
-    images: imageReducer
+    images: imageReducer,
+    login: isLoggedInReducer
 });
 
 export default rootReducer;

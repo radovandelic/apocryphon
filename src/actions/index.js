@@ -32,3 +32,10 @@ export const updateImages = (images) => {
         images
     }
 }
+
+export const isLoggedIn = (data) => {
+    return {
+        type: 'IS_LOGGED_IN',
+        data
+    }
+}
