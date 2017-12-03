@@ -39,7 +39,7 @@ app.use(function (req, res, next) {
     User.findOne({ email: req.session.user.email }, function (err, user) {
       if (user) {
         req.user = user;
-        delete req.user.password; // delete the password from the session
+        req.user.password = undefined; // delete the password from the session
         req.session.user = user; //refresh the session value
         res.locals.user = user;
       }

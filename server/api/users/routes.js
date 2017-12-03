@@ -2,8 +2,9 @@ var router = require('express').Router();
 var User = require('./model');
 var bcrypt = require('bcrypt');
 var session = require('client-sessions');
-var passport = require('passport');
+//var passport = require('passport');
 
+// C //
 router.post('/create', (req, res) => {
   var user = req.body;
   if (user.email && user.password) {
@@ -14,7 +15,8 @@ router.post('/create', (req, res) => {
         user.password = hash;
         User.create(user)
           .then(user => {
-            delete user.password;
+            user.password = undefined;
+            req.session.user = user;
             res.status(200).json(user);
           })
           .catch(err => {
@@ -22,13 +24,16 @@ router.post('/create', (req, res) => {
           });
       }
     });
-
   }
-
 });
 
-router.get('/:id', (req, res) => {
-  User.findOne({ _id: req.params.id }, (err, user) => {
+// R //
+router.get('/:id', requireLogin, (req, res) => {
+  if (req.session.user.id != req.params.id) {
+    return res.status(500).json({ text: "Illegal action" });
+  }
+  User.findOne({ _id: req.session.user.id }, (err, user) => {
+    console.log(err || user)
     if (err) {
       res.status(500).json(err);
     } else {
@@ -39,6 +44,9 @@ router.get('/:id', (req, res) => {
 
 // U //
 router.post('/:id/update', requireLogin, (req, res) => {
+  if (req.session.user.id != req.params.id) {
+    return res.status(500).json({ text: "Illegal action" });
+  }
   var user = req.body;
   if (user.password) {
     bcrypt.hash(user.password, 8, (err, hash) => {
@@ -46,11 +54,11 @@ router.post('/:id/update', requireLogin, (req, res) => {
         res.status(500).json(err);
       } else {
         user.password = hash;
-        User.update({ _id: req.params.id }, { $set: user }, (err, user) => {
+        User.update({ _id: req.params.id }, { $set: user }, (err, response) => {
           if (err) {
             res.status(500).json(err);
           } else {
-            res.status(200).json(user);
+            res.status(200).json(response);
           }
         });
       }
@@ -68,7 +76,8 @@ router.post('/:id/update', requireLogin, (req, res) => {
 
 // D //
 router.delete('/:id/delete', requireLogin, (req, res) => {
-  User.remove({ _id: req.params.id }, err => {
+  console.log(req.session);
+  User.remove({ _id: req.session.user.id }, err => {
     if (err) res.status(500).json(err);
     else res.status(200).json({ status: 'success' });
   });
@@ -89,6 +98,7 @@ router.post('/login', (req, res) => {
             if (result) {
               user.password = undefined;
               req.session.user = user;
+
               res.status(200).json(user);
               //console.log(req.session);
             } else
@@ -112,7 +122,42 @@ router.post('/logout', (req, res) => {
   res.status(200).json('you have logged out');
 });
 
-function isLoggedIn(req, res, next) {
+router.post("/guest/create", (req, res) => {
+  req.session.user = req.body;
+  req.session.user.guest = true;
+  res.status(200).json(req.session.user);
+})
+
+router.post("/updateprogress/:stage/:level", (req, res) => {
+  if (req.body) {
+    var stage = req.params.stage;
+    var level = req.params.level;
+    req.session.user[stage] = [];
+    req.session.user[stage][level] = req.body.words;
+    if (!req.body.guest) {
+      User.update({ _id: req.params.id }, { $set: req.body }, (err, response) => {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          res.status(200).json(response);
+        }
+      });
+    } else {
+      res.status(200).json(req.session.user);
+    }
+  }
+})
+
+router.get("/getprogress/:stage/:level", (req, res) => {
+  var stage = req.params.stage;
+  var level = req.params.level;
+  if (!req.session.user[stage] && req.session.user[level]) res.status(404).json({ text: "Not found" });
+  else {
+    res.status(200).json(req.session.user[stage][level]);
+  }
+})
+
+const isLoggedIn = (req, res, next) => {
   // if user is authenticated in the session, carry on
   if (req.session && req.session.user) return next();
   // if they aren't redirect them to the home page
@@ -120,8 +165,7 @@ function isLoggedIn(req, res, next) {
 }
 
 function requireLogin(req, res, next) {
-  if (!req.user) {
-    console.log(req.user);
+  if (!req.session) {
     res.status(404).json({ status: 'Your are not logged in.' });
   } else {
     next();
