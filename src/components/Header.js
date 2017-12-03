@@ -6,7 +6,7 @@ class Header extends Component {
     return (
       <header className="header">
         <div className="left">
-          <NavLink to='/landingpage' className="logo" alt=" "></NavLink>
+          <NavLink to='/' className="logo" alt=" "></NavLink>
         </div>
         <div className="right">
           <NavLink to='/login'>Login</NavLink>

@@ -18,10 +18,10 @@ class App extends Component {
     return (
       <div className="app">
         <Header />
+        <Route exact path='/' component={Landingpage} />
         <Route path='/login' component={Login} />
         <Route path='/logout' component={Logout} />
         <Route path='/register' component={Register} />
-        <Route path='/landingpage' component={Landingpage} />
         <Route path='/lesson/:stage/:level' component={Lesson} />
         <Route path='/dashboard' component={Dashboard} />
       </div>

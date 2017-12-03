@@ -12,6 +12,7 @@ class LevelProgress extends Component {
         var images = [];
         for (let i = 0; i < 10; i++) {
             translations[i] = {};
+            images[i] = "https://www.vermeer.com.au/wp-content/uploads/2016/12/attachment-no-image-available.png";
         }
         var getTranslations = (wordlist, i) => {
             if (wordlist.errors) {
@@ -28,6 +29,9 @@ class LevelProgress extends Component {
                 })
             } else {
                 translations = [];
+                for (let i = 0; i < 10; i++) {
+                    translations[i] = {};
+                }
             }
         }
         var getImages = (wordlist, i) => {
@@ -35,14 +39,19 @@ class LevelProgress extends Component {
                 translate(languages.target, 'en', wordlist[i].word, (err, data) => {
                     var word = JSON.parse(data.body)[0];
                     request.get(`https://www.philarios.ml/api/images/${word}`, (err, data) => {
-                        images[i] = JSON.parse(data.body);
+                        if (word && data.body) {
+                            images[i] = JSON.parse(data.body);
+                            updateImages(images);
+                        }
                         i++;
-                        updateImages(images);
                         getImages(wordlist, i);
                     })
                 })
             } else {
                 images = []
+                for (let i = 0; i < 10; i++) {
+                    images.push("https://www.vermeer.com.au/wp-content/uploads/2016/12/attachment-no-image-available.png");
+                }
             }
         }
         return (
