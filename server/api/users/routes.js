@@ -6,24 +6,25 @@ var passport = require('passport');
 
 router.post('/create', (req, res) => {
   var user = req.body;
-  console.log(req.body);
-  bcrypt.hash(user.password, 8, (err, hash) => {
-    if (err) {
-      res.status(500).json(err);
-    }
-    bcrypt.compare(user.password, hash, (err, result) => {
-      if (err) {throw (err); }
-      console.log("create results ", result);
-    })    
-   user.password = hash;
-    User.create(user)
-      .then(user => {
-        res.status(200).json(user);
-      })
-      .catch(err => {
+  if (user.email && user.password) {
+    bcrypt.hash(user.password, 8, (err, hash) => {
+      if (err) {
         res.status(500).json(err);
-      });
-  });
+      } else {
+        user.password = hash;
+        User.create(user)
+          .then(user => {
+            delete user.password;
+            res.status(200).json(user);
+          })
+          .catch(err => {
+            res.status(500).json(err);
+          });
+      }
+    });
+
+  }
+
 });
 
 router.get('/:id', (req, res) => {
@@ -75,28 +76,21 @@ router.delete('/:id/delete', requireLogin, (req, res) => {
 
 // login //
 router.post('/login', (req, res) => {
-  console.log('sessions:', req.session);
   var email = req.body.email;
   var password = req.body.password;
-  console.log(email, password);
   User.findOne({ email: email }, (err, user) => {
-    console.log(" this is the user", user)
     if (err) {
       res.status(500).json(err);
     } else {
       if (user) {
-        console.log(user);
         bcrypt
           .compare(password, user.password)
           .then(result => {
-            console.log(result);
-            console.log(password);
-            console.log(user.password);
             if (result) {
+              user.password = undefined;
               req.session.user = user;
-
               res.status(200).json(user);
-              console.log(req.session);
+              //console.log(req.session);
             } else
               res
                 .status(404)
@@ -111,8 +105,8 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  console.log('this is sesson', req.session.user);
-  console.log('this is req.user', req.user);
+  //console.log('this is sesson', req.session.user);
+  //console.log('this is req.user', req.user);
   req.session.reset();
 
   res.status(200).json('you have logged out');

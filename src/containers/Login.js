@@ -16,7 +16,7 @@ export default class Login extends Component {
         user.email = this.state.email;
         user.password = this.state.password;
         console.log(user);
-        axios.post(`http://localhost:8080/user/login`, user)
+        axios.post(`http://localhost:8080/user/login`, user, { withCredentials: true })
             .then(res => {
                 console.log(res)
 

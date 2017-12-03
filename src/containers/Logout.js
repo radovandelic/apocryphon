@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default class Logout extends Component {
     logout = () => {
-        axios.post(`http://localhost:8080/user/logout`)
+        axios.post(`http://localhost:8080/user/logout`, {}, { withCredentials: true })
             .then(res => {
                 console.log(res)
 

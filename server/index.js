@@ -34,9 +34,9 @@ app.use(
 
 //The password might be encrypted in the session,
 // but that’s still no reason to leave it in the cookie. Go ahead and delete it!
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   if (req.session && req.session.user) {
-    User.findOne({ email: req.session.user.email }, function(err, user) {
+    User.findOne({ email: req.session.user.email }, function (err, user) {
       if (user) {
         req.user = user;
         delete req.user.password; // delete the password from the session
@@ -54,6 +54,8 @@ app.use(function(req, res, next) {
 // 3rd party middleware
 app.use(
   cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
     exposedHeaders: config.corsHeaders
   })
 );
@@ -76,7 +78,7 @@ initializeDb(db => {
   // api router
   app.use('/user', api({ config, db }));
 
-  app.use(function(req, res) {
+  app.use(function (req, res) {
     res.statusCode = 404;
     res.send("Page doesn't exist");
   });
