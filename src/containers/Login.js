@@ -31,49 +31,6 @@ class Login extends Component {
             })
             .catch(error => console.log(error.response))
     }
-    emailValidation = (val) => {
-        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-        var label = document.getElementById('label-email');
-        var input = document.getElementById('email');
-        if (re.test(val)) {
-            console.log("valid")
-            label.classList.add('valid');
-            input.classList.add('valid');
-
-            label.classList.remove('invalid');
-            input.classList.remove('invalid');
-        }
-        else {
-            console.log("INvalid")
-            label.classList.add('invalid');
-            input.classList.add('invalid');
-
-            label.classList.remove('valid');
-            input.classList.remove('valid');
-        }
-
-    }
-    passwordValidation = (val) => {
-        var label = document.getElementById('label-password');
-        var input = document.getElementById('password');
-        if (val.length > 7) {
-            console.log("valid")
-            label.classList.add('valid');
-            input.classList.add('valid');
-
-            label.classList.remove('invalid');
-            input.classList.remove('invalid');
-        }
-        else {
-            console.log("INvalid")
-            label.classList.add('invalid');
-            input.classList.add('invalid');
-
-            label.classList.remove('valid');
-            input.classList.remove('valid');
-        }
-    }
     render() {
         var { login } = this.props;
         console.log(login)
@@ -87,7 +44,6 @@ class Login extends Component {
                         onChange={e => {
                             var val = e.target.value;
                             this.setState({ email: val });
-                            this.emailValidation(val);
                         }
                         }
                     />
@@ -97,8 +53,7 @@ class Login extends Component {
                         placeholder='Enter your password'
                         onChange={e => {
                             var val = e.target.value;
-                            this.setState({ password: e.target.value });
-                            this.passwordValidation(val);
+                            this.setState({ password: val });
                         }
                         }
                     />

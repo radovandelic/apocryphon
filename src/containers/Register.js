@@ -17,34 +17,32 @@ export default class Register extends Component {
         }
     }
     componentDidMount = () => {
-        document.getElementById('email').focus();
-        document.getElementById('password').focus();
-        this.enableSubmitButton();
-    }
-    componentDidUpdate = () => {
-        setTimeout(() => {
-            document.getElementById('email').focus();
-            this.enableSubmitButton();
-        }, 1500)
+        //document.getElementById('email').value = 'email@email.com';
+        //document.getElementById('password').value = 'password';
+        //this.enableSubmitButton('email@email.com', 'password');
     }
     createUser = () => {
-        var user = {}
-        user.username = this.state.username;
-        user.email = this.state.email;
-        user.password = this.state.password;
-        console.log(user);
-        axios.post(`http://localhost:8080/user/create`, user)
-            .then(res => {
-                if (res.data.status === 200) {
-                    this.setState({ successful: true });
-                }
-                console.log(res)
+        if (this.state.validEmail && this.state.validPassword) {
+            var user = {}
+            user.username = this.state.username;
+            user.email = this.state.email;
+            user.password = this.state.password;
+            console.log(user);
+            axios.post(`http://localhost:8080/user/create`, user)
+                .then(res => {
+                    if (res.data.status === 200) {
+                        this.setState({ successful: true });
+                    }
+                    console.log(res)
 
-            })
-            .catch(error => console.log(error.response))
+                })
+                .catch(error => console.log(error.response))
+        } else {
+            this.enableSubmitButton(null, null);
+        }
     }
     emailValidation = (val) => {
-        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         var label = document.getElementById('label-email');
         var input = document.getElementById('email');
@@ -56,6 +54,7 @@ export default class Register extends Component {
 
             label.classList.remove('invalid');
             input.classList.remove('invalid');
+            this.enableSubmitButton(true, null);
         }
         else {
             this.setState({ validEmail: false });
@@ -65,8 +64,8 @@ export default class Register extends Component {
 
             label.classList.remove('valid');
             input.classList.remove('valid');
+            this.enableSubmitButton(false, null);
         }
-        this.enableSubmitButton();
     }
     passwordValidation = (val) => {
         var label = document.getElementById('label-password');
@@ -79,6 +78,7 @@ export default class Register extends Component {
 
             label.classList.remove('invalid');
             input.classList.remove('invalid');
+            this.enableSubmitButton(null, true);
         }
         else {
             this.setState({ validPassword: false });
@@ -88,19 +88,22 @@ export default class Register extends Component {
 
             label.classList.remove('valid');
             input.classList.remove('valid');
+            this.enableSubmitButton(null, false);
         }
-        this.enableSubmitButton();
     }
 
-    enableSubmitButton = () => {
-        var validEmail = this.state.validEmail;
-        var validPassword = this.state.validPassword;
+    enableSubmitButton = (email, pw) => {
+        var validEmail = email != null ? email : this.state.validEmail;
+        var validPassword = pw != null ? pw : this.state.validPassword;
 
         var submitButton = document.getElementById('submit-button');
 
         if (validEmail && validPassword) {
             submitButton.disabled = false;
             submitButton.classList.remove('disabled');
+        } else {
+            submitButton.disabled = true;
+            submitButton.classList.add('disabled');
         }
     }
     render() {
@@ -135,10 +138,8 @@ export default class Register extends Component {
                             var val = e.target.value;
                             this.setState({ email: val });
                             this.emailValidation(val);
+
                         }
-                        }
-                        onFocus={
-                            this.focussed
                         }
                     />
 
@@ -150,14 +151,12 @@ export default class Register extends Component {
                             var val = e.target.value;
                             this.setState({ password: e.target.value });
                             this.passwordValidation(val);
+
                         }
-                        }
-                        onFocus={
-                            this.focussed
                         }
                     />
 
-                    <button id='submit-button' onClick={this.createUser} type='button' className='button disabled'>Sign Up</button>
+                    <button id='submit-button' onClick={this.createUser} type='button' className='button'>Sign Up</button>
                 </form>
                 Already have an account? <Link to='/login'>Login here.</Link>
             </div>
