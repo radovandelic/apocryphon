@@ -12,13 +12,7 @@ var origins = ['http://localhost:8080', 'http://localhost:3000',
 
 router.use(
   cors({
-    origin: (origin, callback) => {
-      if (origins.indexOf(origin) !== -1) {
-        callback(null, true)
-      } else {
-        callback(new Error('Not allowed by CORS'))
-      }
-    },
+    origin: origins,
     credentials: true,
     exposedHeaders: config.corsHeaders
   })
