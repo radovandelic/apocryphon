@@ -19,9 +19,9 @@ export class Login extends Component {
         user.email = this.state.email;
         user.password = this.state.password;
         var hostname = window.location.hostname;
-        var hosturl = hostname === 'localhost'
-            ? `http://localhost:8080/user/login` : `http://pilarios.ml/user/login`;
-        axios.post(hosturl, user, { withCredentials: true })
+        var url = hostname === 'localhost'
+            ? `http://localhost:8080/user/login` : "/user/login";
+        axios.post(url, user, { withCredentials: true })
             .then(res => {
                 if (res.status === 200) {
                     updateProgress(res.data.languages[0].stages);
