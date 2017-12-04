@@ -1,8 +1,27 @@
+import cors from 'cors';
 var router = require('express').Router();
 var User = require('./model');
 var bcrypt = require('bcrypt');
 var session = require('client-sessions');
-//var passport = require('passport');
+//var passport = require('passport');// 3rd party middleware
+
+var origins = ['http://localhost:3000',
+  'https://philarios.ml', 'https://www.philarios.ml',
+  'https://philarios.gq', 'https://www.philarios.gq']
+
+router.use(
+  cors({
+    origin: (origin, callback) => {
+      if (origins.indexOf(origin) !== -1) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
+    credentials: true,
+    exposedHeaders: config.corsHeaders
+  })
+);
 
 // C //
 router.post('/create', (req, res) => {
