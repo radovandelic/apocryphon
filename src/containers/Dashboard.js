@@ -21,9 +21,12 @@ class Dashboard extends Component {
         return (
             <div className='content dashboard'>
                 <h1>Your Dashboard</h1>
-                <div className='flag_language'>
-                    <img src={`flags/${flags[languages.target].toLowerCase()}.svg`} className='flag' alt=' '></img>
-                    <div className='language'>{lang[languages.target].name}</div>
+                <div className='infos'>
+                    <div className='flag_language'>
+                        <img src={`flags/${flags[languages.target].toLowerCase()}.svg`} className='flag' alt=' '></img>
+                        <div className='language'>{lang[languages.target].name}</div>
+                    </div>
+                    <div className='stage'>Stage: 0</div>
                 </div>
                 <LevelProgress stage='0' level='0' progress={`${progress[0]}%`} />
                 <LevelProgress stage='0' level='1' progress={`${progress[1]}%`} />
