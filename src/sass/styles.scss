@@ -1,6 +1,5 @@
 //@import './partials/_iconfonts.scss';
 
-
 @mixin transition {
   transition: 0.35s all ease-in-out;
 }
@@ -8,14 +7,28 @@
   box-shadow: 1px 1px 10px rgba(0,0,0,.75);
 }
 
-@mixin sketchInput {    
-    border: 0.1em solid transparent;
-    border-image: url('images/pencil-border.jpg') 25 stretch round;
+@mixin sketchInput($num) {    
+    border: 0.1075em solid transparent;
+    border-image: url('images/pencil-border.jpg') $num stretch round;
     content: '';
     height: auto;
     transform: rotate(0deg);
 }
 
+@import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
+@import url('https://fonts.googleapis.com/css?family=Berkshire+Swash');
+@import url('https://fonts.googleapis.com/css?family=Cookie');
+
+@mixin Fredericka { 
+  font-family: 'Fredericka the Great', cursive;
+}
+@mixin Cookie { 
+  font-family: 'Berkshire Swash', cursive;
+}
+@mixin Berkshire { 
+  font-family: 'Cookie', sans-serif;
+  letter-spacing: .05em;
+}
 
 $color1: #0084ff;
 $color1_c: #fff;
@@ -51,7 +64,6 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: inherit;
   transition: inherit;
 }
-
 
 body {
   margin: 0;
@@ -90,6 +102,12 @@ body {
   align-items: center;
   justify-content: space-between;
 
+  @include Berkshire;
+  font-size: 25px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+
+  @include sketchInput(25);
+
   & .left {
     display: flex;
     align-items: center;
@@ -117,7 +135,7 @@ body {
 
       background: $color1;
       color: $color1_c;
-      border: 1px solid $color1;
+      border: .1075em solid $color1;
       @include transition;
       
       &:hover,
@@ -125,6 +143,8 @@ body {
         background: $color2;
         color: $color2_c;
         border: 1px solid $color2_c;
+
+        @include sketchInput(15);
       }
     }
     & a:last-of-type {
@@ -141,6 +161,9 @@ body {
   
   & h1 {
     color: $color3;
+    @include Berkshire;
+    font-size: 40px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,.55);
   }
 
   & .left {
@@ -193,7 +216,7 @@ body {
       color: $color1;
 
       @include transition;
-      @include sketchInput;      
+      @include sketchInput (25);      
 
       &:hover,
       &.active {
@@ -270,7 +293,7 @@ body {
     }
     & .input {
       text-align: center;
-      @include sketchInput;
+      @include sketchInput(25);
       &.correct {
         background: $color5;
         color: $color5_c;
@@ -406,22 +429,35 @@ body {
   display: flex;
   flex-direction: column;
 
-  & .flag_language {
+  & .infos {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: $color1;
+    color: $color1_c;
+    @include sketchInput(65);
 
-    & .flag {
-      width: 50px;
-      height: 40px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      margin-right: 15px;
+    & .flag_language {
+      display: flex;
+      align-items: center;
+  
+      & .flag {
+        width: 50px;
+        height: 40px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 15px;
+      }
+      & .language {
+        font-size: 24px;
+      }
     }
-    & .language {
-      color: $color1;
+    & .stage {
       font-size: 24px;
+      margin-left: 15px;
     }
   }
 
@@ -433,6 +469,8 @@ body {
 
     display: flex;
     align-items: center;
+
+    @include sketchInput (25);
     
     &:last-child {
       margin-bottom: 0px;
@@ -448,12 +486,12 @@ body {
     }
     
     & .progress {
-      border: 1px solid #ccc;
       color: $color2;
       margin-right: 10px;
-      height: 15px;
       flex: 1;
-      
+      @include sketchInput(95);
+      border: 1px solid #B4B2B2;
+      height: 15px;
       display: flex;
       
       & .bar {
@@ -497,7 +535,7 @@ body {
       position: relative;
       border-width: 1px;
       border-color: transparent;
-      @include sketchInput;
+      @include sketchInput(25);
     }
   }
 }
@@ -590,7 +628,7 @@ input,
   outline: none;
   padding: 7px 15px;
   @include transition;  
-  @include sketchInput;
+  @include sketchInput(25);
 
   &:-webkit-autofill {
     background-color: $color3;
