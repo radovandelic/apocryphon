@@ -15,7 +15,7 @@ var origins = ['http://localhost:8080', 'http://localhost:3000', 'http://localho
 router.use(
   cors({
     origin: origins,
-    //credentials: true,
+    credentials: true,
     exposedHeaders: config.corsHeaders
   })
 );
