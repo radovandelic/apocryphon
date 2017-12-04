@@ -5,6 +5,14 @@ export const changeOriginLanguage = language => {
     }
 }
 
+export const changeLanguage = (language, direction) => {
+    return {
+        type: 'CHANGE_LANGUAGE',
+        language,
+        direction
+    }
+}
+
 export const changeLevel = level => {
     return {
         type: 'CHANGE_LEVEL',
