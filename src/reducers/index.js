@@ -41,6 +41,14 @@ function levelReducer(state = 'noob', action) {
             return state
     }
 }
+function activeStageReducer(state = '0', action) {
+    switch (action.type) {
+        case 'SET_ACTIVE_STAGE':
+            return action.setStage
+        default:
+            return state
+    }
+}
 
 function wordListReducer(state = wordlist, action) {
     switch (action.type) {
@@ -78,6 +86,7 @@ function isLoggedInReducer(state = null, action) {
 const rootReducer = combineReducers({
     languages: languageReducer,
     level: levelReducer,
+    activeStage: activeStageReducer,
     words: wordListReducer,
     images: imageReducer,
     login: isLoggedInReducer

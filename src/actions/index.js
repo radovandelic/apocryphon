@@ -5,6 +5,13 @@ export const changeOriginLanguage = language => {
     }
 }
 
+export const setStage = setStage => {
+    return {
+        type: 'SET_ACTIVE_STAGE',
+        setStage
+    }
+}
+
 export const changeLevel = level => {
     return {
         type: 'CHANGE_LEVEL',
