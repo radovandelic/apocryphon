@@ -539,6 +539,44 @@ body {
     }
   }
 }
+
+.pagination {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px 0;
+  & .stages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & .select-info {
+      margin-right: 10px;
+    }
+    & .number:not(.select-info) {
+      padding: 5px 10px;
+      margin-right: 5px;
+      cursor: pointer;
+      @include sketchInput(95);
+      &:hover:not(.select-info) {
+        background: $color3;
+        color: $color3_c;
+      }
+      &.active,
+      &:active {
+        background: $color1;
+        color: $color1_c;
+      }
+    }
+    & .number:last-child {
+      margin-right: 0px;
+    }
+  }
+  & .unlock {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+  }
+}
 .popup-container {
   position: fixed;
   top: 0;
