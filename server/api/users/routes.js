@@ -10,13 +10,13 @@ var origins = ['http://localhost:8080', 'http://localhost:3000',
   'https://philarios.ml', 'https://www.philarios.ml',
   'https://philarios.gq', 'https://www.philarios.gq']
 
-router.use(
+/*router.use(
   cors({
     origin: origins,
     credentials: true,
     exposedHeaders: config.corsHeaders
   })
-);
+);*/
 
 // C //
 router.post('/create', (req, res) => {
