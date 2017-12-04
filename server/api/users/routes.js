@@ -114,7 +114,8 @@ router.post('/login', (req, res) => {
               req.session.user = user;
 
               res.status(200).json(user);
-              //console.log(req.session);
+              console.log(req.session);
+              console.log(user);
             } else
               res
                 .status(404)
