@@ -40,12 +40,9 @@ export const isLoggedIn = (data) => {
     }
 }
 
-export const updateProgress = (words, stages, stage, level) => {
+export const updateProgress = (stages) => {
     return {
         type: 'UPDATE_PROGRESS',
-        words,
         stages,
-        stage,
-        level
     }
 }

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
 import { connect } from 'react-redux';
+import { isLoggedIn, updateProgress } from '../actions';
 
 class Login extends Component {
     constructor(props) {
@@ -19,9 +18,11 @@ class Login extends Component {
         var user = {}
         user.email = this.state.email;
         user.password = this.state.password;
+        var hostname = window.location.hostname;
+        var hosturl = hostname === 'localhost'
+            ? `http://localhost:8080/user/login` : `https://${hostname}/user/login`;
         axios.post(`http://localhost:8080/user/login`, user, { withCredentials: true })
             .then(res => {
-                console.log(res);
                 if (res.status === 200) {
                     isLoggedIn(res.data);
                     this.setState({ validation: 'valid' })
@@ -80,14 +81,16 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    isLoggedIn(data) {
-        dispatch({
-            type: "IS_LOGGED_IN",
-            data
-        })
+const mapDispatchToProps = dispatch => {
+    return {
+        isLoggedIn: (data) => {
+            dispatch(isLoggedIn(data));
+        },
+        updateProgress: (stages) => {
+            dispatch(updateProgress(stages));
+        }
     }
-})
+}
 
 Login = connect(
     mapStateToProps,

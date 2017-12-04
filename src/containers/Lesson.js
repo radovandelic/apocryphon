@@ -154,7 +154,7 @@ class Lesson extends Component {
                 this.setState({ completed: true });
                 var stages = languages.stages;
                 stages[stage].levels[level].words = words;
-                updateProgress(words, stages, stage, level);
+                updateProgress(stages);
             }
         })
     }
@@ -217,8 +217,8 @@ const mapDispatchToProps = dispatch => {
         updateWordList: (words) => {
             dispatch(updateWordList(words));
         },
-        updateProgress: (words, stages, stage, level) => {
-            dispatch(updateProgress(words, stages, stage, level));
+        updateProgress: (stages) => {
+            dispatch(updateProgress(stages));
         }
     }
 }

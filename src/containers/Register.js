@@ -4,7 +4,9 @@ import axios from 'axios';
 
 import { Link } from 'react-router-dom';
 
-export default class Register extends Component {
+import { connect } from 'react-redux';
+
+export class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,12 +25,16 @@ export default class Register extends Component {
     }
     createUser = () => {
         if (this.state.validEmail && this.state.validPassword) {
+            const { languages } = this.props;
             var user = {}
             user.username = this.state.username;
             user.email = this.state.email;
             user.password = this.state.password;
-            console.log(user);
-            axios.post(`http://localhost:8080/user/create`, user)
+            user.languages = languages;
+            var hostname = window.location.hostname;
+            var hosturl = hostname === 'localhost'
+                ? `http://localhost:8080/user/create` : `https://${hostname}/user/create`;
+            axios.post(hosturl, user)
                 .then(res => {
                     if (res.data.status === 200) {
                         this.setState({ successful: true });
@@ -163,3 +169,16 @@ export default class Register extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        languages: state.languages
+    }
+}
+
+Register = connect(
+    mapStateToProps,
+    null
+)(Register)
+
+export default Register;
