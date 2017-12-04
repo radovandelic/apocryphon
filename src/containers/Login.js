@@ -20,7 +20,7 @@ export class Login extends Component {
         user.password = this.state.password;
         var hostname = window.location.hostname;
         var hosturl = hostname === 'localhost'
-            ? `http://localhost:8080/user/login` : `https://${hostname}/user/login`;
+            ? `http://localhost:8080/user/login` : `https://localhost/user/login`;
         axios.post(hosturl, user, { withCredentials: true })
             .then(res => {
                 if (res.status === 200) {
