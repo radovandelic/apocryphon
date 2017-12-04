@@ -102,10 +102,16 @@ class Lesson extends Component {
 
         var input = document.getElementById("current-word-guess");
         input.classList.add("correct");
+
+        var wrongMessageDiv = document.getElementById("wrong-message");
+        wrongMessageDiv.classList.remove("show");
     }
     wrongMessage = () => {
-        var correctMessageDiv = document.getElementById("wrong-message");
-        correctMessageDiv.classList.add("show");
+        var correctMessageDiv = document.getElementById("correct-message");
+        correctMessageDiv.classList.remove("show");
+
+        var wrongMessageDiv = document.getElementById("wrong-message");
+        wrongMessageDiv.classList.add("show");
 
         var input = document.getElementById("current-word-guess");
         input.classList.add("wrong");
