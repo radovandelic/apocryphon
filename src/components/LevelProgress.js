@@ -12,7 +12,7 @@ class LevelProgress extends Component {
         var images = [];
         for (let i = 0; i < 10; i++) {
             translations[i] = {};
-            images[i] = "https://www.vermeer.com.au/wp-content/uploads/2016/12/attachment-no-image-available.png";
+            images[i] = "../sass/images/no-image.png";
         }
         var getTranslations = (wordlist, i) => {
             if (wordlist.errors) {
@@ -50,7 +50,7 @@ class LevelProgress extends Component {
             } else {
                 images = []
                 for (let i = 0; i < 10; i++) {
-                    images.push("https://www.vermeer.com.au/wp-content/uploads/2016/12/attachment-no-image-available.png");
+                    images.push("../sass/images/no-image.png");
                 }
             }
         }
