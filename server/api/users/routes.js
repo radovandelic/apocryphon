@@ -6,9 +6,9 @@ var bcrypt = require('bcrypt');
 var session = require('client-sessions');
 //var passport = require('passport');// 3rd party middleware
 
-var origins = ['http://localhost:3000',
-  'https://philarios.ml', 'https://www.philarios.ml',
-  'https://philarios.gq', 'https://www.philarios.gq']
+var origins = ['http://localhost:8080', 'http://localhost:3000',
+  'https://philarios', 'https://www.philarios',
+  'https://philarios', 'https://www.philarios']
 
 router.use(
   cors({
