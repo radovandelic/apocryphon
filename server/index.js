@@ -51,9 +51,18 @@ app.use(function (req, res, next) {
 });
 
 // 3rd party middleware
+var origins = ['http://localhost:3000',
+  'https://philarios.ml', 'https://www.philarios.ml',
+  'https://philarios.gq', 'https://www.philarios.gq']
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: (origin, callback) => {
+      if (origins.indexOf(origin) !== -1) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
     credentials: true,
     exposedHeaders: config.corsHeaders
   })
