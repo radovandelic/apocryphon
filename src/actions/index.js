@@ -12,6 +12,14 @@ export const setStage = setStage => {
     }
 }
 
+export const changeLanguage = (language, direction) => {
+    return {
+        type: 'CHANGE_LANGUAGE',
+        language,
+        direction
+    }
+}
+
 export const changeLevel = level => {
     return {
         type: 'CHANGE_LEVEL',
@@ -47,12 +55,9 @@ export const isLoggedIn = (data) => {
     }
 }
 
-export const updateProgress = (words, stages, stage, level) => {
+export const updateProgress = (stages) => {
     return {
         type: 'UPDATE_PROGRESS',
-        words,
         stages,
-        stage,
-        level
     }
 }

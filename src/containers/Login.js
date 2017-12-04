@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
 import { connect } from 'react-redux';
+import { isLoggedIn, updateProgress, changeLanguage } from '../actions';
 
-class Login extends Component {
+export class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,14 +14,19 @@ class Login extends Component {
         }
     }
     findUser = () => {
-        var { isLoggedIn } = this.props;
+        var { isLoggedIn, updateProgress, changeLanguage } = this.props;
         var user = {}
         user.email = this.state.email;
         user.password = this.state.password;
-        axios.post(`http://localhost:8080/user/login`, user, { withCredentials: true })
+        var hostname = window.location.hostname;
+        var url = hostname === 'localhost'
+            ? `http://localhost:8080/user/login` : "/user/login";
+        axios.post(url, user, /*{ withCredentials: true }*/)
             .then(res => {
-                console.log(res);
                 if (res.status === 200) {
+                    updateProgress(res.data.languages[0].stages);
+                    changeLanguage(res.data.languages[0].origin, 'origin');
+                    changeLanguage(res.data.languages[0].target, 'target');
                     isLoggedIn(res.data);
                     this.setState({ validation: 'valid' })
                 } else {
@@ -80,14 +84,19 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    isLoggedIn(data) {
-        dispatch({
-            type: "IS_LOGGED_IN",
-            data
-        })
+const mapDispatchToProps = dispatch => {
+    return {
+        isLoggedIn: (data) => {
+            dispatch(isLoggedIn(data));
+        },
+        updateProgress: (stages) => {
+            dispatch(updateProgress(stages));
+        },
+        changeLanguage: (language, direction) => {
+            dispatch(changeLanguage(language, direction));
+        }
     }
-})
+}
 
 Login = connect(
     mapStateToProps,

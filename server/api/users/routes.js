@@ -1,8 +1,24 @@
+import cors from 'cors';
+import config from '../../config.json';
 var router = require('express').Router();
 var User = require('./model');
 var bcrypt = require('bcrypt');
 var session = require('client-sessions');
-//var passport = require('passport');
+//var passport = require('passport');// 3rd party middleware
+
+var origins = ['http://localhost:8080', 'http://localhost:3000', 'http://localhost', 'https://localhost',
+  'philarios.ml', 'www.philarios.ml',
+  'http://philarios.ml', 'http://www.philarios.ml',
+  'https://philarios.gq', 'https://www.philarios.gq',
+  'http://philarios.gq', 'http://www.philarios.gq']
+
+router.use(
+  cors({
+    origin: origins,
+    //credentials: true,
+    exposedHeaders: config.corsHeaders
+  })
+);
 
 // C //
 router.post('/create', (req, res) => {
@@ -100,7 +116,8 @@ router.post('/login', (req, res) => {
               req.session.user = user;
 
               res.status(200).json(user);
-              //console.log(req.session);
+              console.log(req.session);
+              console.log(user);
             } else
               res
                 .status(404)
