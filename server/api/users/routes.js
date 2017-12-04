@@ -1,4 +1,5 @@
 import cors from 'cors';
+import config from '../../config.json';
 var router = require('express').Router();
 var User = require('./model');
 var bcrypt = require('bcrypt');
