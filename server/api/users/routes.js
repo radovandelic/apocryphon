@@ -6,19 +6,19 @@ var bcrypt = require('bcrypt');
 var session = require('client-sessions');
 //var passport = require('passport');// 3rd party middleware
 
-var origins = ['http://localhost:8080', 'http://localhost:3000', 'http://localhost',
+var origins = ['http://localhost:8080', 'http://localhost:3000', 'http://localhost', 'https://localhost',
   'https://philarios.ml', 'https://www.philarios.ml',
   'http://philarios.ml', 'http://www.philarios.ml',
   'https://philarios.gq', 'https://www.philarios.gq',
   'http://philarios.gq', 'http://www.philarios.gq']
 
-router.use(
+/*router.use(
   cors({
     origin: origins,
     credentials: true,
     exposedHeaders: config.corsHeaders
   })
-);
+);*/
 
 // C //
 router.post('/create', (req, res) => {
