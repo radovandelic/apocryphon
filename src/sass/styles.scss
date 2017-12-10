@@ -1,4 +1,5 @@
 //@import './partials/_iconfonts.scss';
+@import './_colors.scss';
 
 @mixin transition {
   transition: 0.35s all ease-in-out;
@@ -18,6 +19,8 @@
 @import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
 @import url('https://fonts.googleapis.com/css?family=Berkshire+Swash');
 @import url('https://fonts.googleapis.com/css?family=Cookie');
+@import url('https://fonts.googleapis.com/css?family=Just+Another+Hand');
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
 
 @mixin Fredericka { 
   font-family: 'Fredericka the Great', cursive;
@@ -29,24 +32,14 @@
   font-family: 'Cookie', sans-serif;
   letter-spacing: .05em;
 }
-
-$color1: #0084ff;
-$color1_c: #fff;
-
-$color2: #FF5E00;
-$color2_c: #fff;
-
-$color3: #FF3C00;
-$color3_c: #fff;
-
-$color4: lighten($color1, 20);
-$color4_c: #fff;
-
-$color5: green;
-$color5_c: white;
-
-$color6: red;
-$color6_c: white;
+@mixin Font { 
+  font-family: 'Just Another Hand', sans-serif;
+  letter-spacing: .05em;
+}
+@mixin Font { 
+  font-family: 'Indie Flower', sans-serif;
+  //letter-spacing: .05em;
+}
 
 /* Change Autocomplete styles in Chrome*/
 input:-webkit-autofill,
@@ -97,24 +90,28 @@ body {
   color: white;
 
   padding: 2px 20px;
-
+  position: relative;
+  z-index: 10;
+  
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  @include Berkshire;
-  font-size: 25px;
+  
+  @include Font;
+  font-size: 18px;
   text-shadow: 1px 1px 3px rgba(0,0,0,.5);
-
+  
   @include sketchInput(25);
+  height: 55px;
+  box-sizing: border-box;
 
   & .left {
     display: flex;
     align-items: center;
 
     & .logo {
-      height: 66px;
-      width: 197px;
+      height: 30px;
+      width: 110px;
       background-position: center;
       background-image: url(./philariosLogo.svg);
       background-repeat: no-repeat;
@@ -133,23 +130,38 @@ body {
       padding: 10px;
       flex: 1;
 
-      background: $color1;
+      //background: $color1;
       color: $color1_c;
-      border: .1075em solid $color1;
+      //border: .1075em solid $color1;
       @include transition;
       
       &:hover,
       &.active {
-        background: $color2;
-        color: $color2_c;
-        border: 1px solid $color2_c;
+        //background: $color2;
+        color: $color2;
+        text-decoration: underline;
+        //border: 1px solid $color2_c;
 
-        @include sketchInput(15);
+        //@include sketchInput(15);
       }
     }
     & a:last-of-type {
       margin-right: 0;
     }
+  }
+  & .burger {
+    display: none;
+  }
+}
+.mobile-navigation {
+  display: none;
+  height: 0;
+  @include transition;
+  transition: .65s all linear;
+
+  & a {
+    height: 0;
+    transform: translateX(-100vw);
   }
 }
 
@@ -161,9 +173,10 @@ body {
   
   & h1 {
     color: $color3;
-    @include Berkshire;
+    @include Font;
     font-size: 40px;
     text-shadow: 1px 1px 3px rgba(0,0,0,.55);
+    margin: 10px 0;
   }
 
   & .left {
@@ -560,6 +573,7 @@ body {
       &:hover:not(.select-info) {
         background: $color3;
         color: $color3_c;
+        @include transition;
       }
       &.active,
       &:active {
@@ -737,3 +751,5 @@ input,
     }
   }
 }
+
+@import './partials/_media-queries.scss';
