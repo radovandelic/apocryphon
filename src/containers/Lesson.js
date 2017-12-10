@@ -160,17 +160,26 @@ class Lesson extends Component {
     }
     render = () => {
         var { languages, match, words, images } = this.props;
+        var stage = match.params.stage;
         var level = match.params.level;
 
         return (
             <div className="content lesson">
                 {this.state.completed ? <Popup correct={this.state.correct} wrong={this.state.wrong} /> : ''}
                 <div className="left">
-                    <div className="level-text">Level:</div>
-                    <div className="level-number">{Number(level) + 1}</div>
-                    <div className='flag_language'>
-                        <img src={`/flags/${flags[languages.target].toLowerCase()}.svg`} className='flag' alt=' '></img>
-                        <div className='language'>{lang[languages.target].name}</div>
+                    <div className="infos">
+                        <div className="stage">
+                            <div className="stage-text">Stage:</div>
+                            <div className="stage-number">{Number(stage) + 1}</div>
+                        </div>
+                        <div className="level">
+                            <div className="level-text">Level:</div>
+                            <div className="level-number">{Number(level) + 1}</div>
+                        </div>
+                        <div className='flag_language'>
+                            <img src={`/flags/${flags[languages.target].toLowerCase()}.svg`} className='flag' alt=' '></img>
+                            <div className='language'>{lang[languages.target].name}</div>
+                        </div>
                     </div>
                     <button id="0" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word active">{words[0].word}</button>
                     <button id="1" onClick={(e) => { this.changeCurrentWordId(e.target.id); }} className="button word">{words[1].word}</button>

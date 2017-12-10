@@ -87,7 +87,7 @@
         }
     }
     .app {
-        .content.dashboard {
+        & .content.dashboard {
             & .infos {
                 flex-direction: column;
                     & .flag_language {
@@ -104,6 +104,37 @@
                         margin-top: 10px;
                         font-size: 16px;
                     }
+            }
+        }
+        & .content.lesson {
+            flex-direction: column;
+
+            & .left {
+                max-width: initial;
+                flex-wrap: wrap;
+                display: initial;
+
+                & .infos {
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+
+                    & .flag_language {
+                        & .flag {
+                            width: initial;
+                            max-width: 40px;
+                        }
+                    }
+                }
+            }
+            & .center {
+                & .current-word {
+                    margin-top: 0;
+                }
+                & .img-container {
+                    width: auto;
+                    height: 160px;
+                }
             }
         }
     }

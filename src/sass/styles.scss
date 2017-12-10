@@ -186,6 +186,8 @@ body {
     display: flex;
     flex-direction: column;
 
+    & .stage-text,
+    & .stage-number,
     & .level-text,
     & .level-number {
       text-align: center;
@@ -193,10 +195,12 @@ body {
       color: $color1;
       font-weight: bold;
     }
+    & .stage-text,
     & .level-text {
       background: $color3_c;
       color: $color3;  
     }
+    & .stage-number,
     & .level-number {
       font-size: 45px;
       margin-bottom: 10px;
@@ -225,8 +229,8 @@ body {
       cursor: pointer;
 
       word-break: break-word;
-      background: lighten($color1, 45);
-      color: $color1;
+      background: $color1;
+      color: $color1_c;
 
       @include transition;
       @include sketchInput (25);      
