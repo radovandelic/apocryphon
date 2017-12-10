@@ -21,7 +21,7 @@ export class Login extends Component {
         var hostname = window.location.hostname;
         var url = hostname === 'localhost'
             ? `http://localhost:8080/user/login` : "/user/login";
-        axios.post(url, user, { withCredentials: true })
+        axios.post(url, user,/* { withCredentials: true }*/)
             .then(res => {
                 if (res.status === 200) {
                     updateProgress(res.data.languages[0].stages);
