@@ -41,29 +41,33 @@ export class Login extends Component {
         return (
             <div className='content login'>
                 <h1>Login</h1>
-                <form>
-                    <label id='label-email' className='label' htmlFor='email'>Email</label>
-                    <input id='email' className='input email' type='email'
-                        placeholder='Enter your email'
-                        onChange={e => {
-                            var val = e.target.value;
-                            this.setState({ email: val });
-                        }
-                        }
-                    />
+                {(this.state.validation === 'invalid')
+                    ? <LoginFailed />
+                    :
+                    <form>
+                        <label id='label-email' className='label' htmlFor='email'>Email</label>
+                        <input id='email' className='input email' type='email'
+                            placeholder='Enter your email'
+                            onChange={e => {
+                                var val = e.target.value;
+                                this.setState({ email: val });
+                            }
+                            }
+                        />
 
-                    <label id='label-password' className='label' htmlFor='password'>Password</label>
-                    <input id='password' className='input password' type='password'
-                        placeholder='Enter your password'
-                        onChange={e => {
-                            var val = e.target.value;
-                            this.setState({ password: val });
-                        }
-                        }
-                    />
+                        <label id='label-password' className='label' htmlFor='password'>Password</label>
+                        <input id='password' className='input password' type='password'
+                            placeholder='Enter your password'
+                            onChange={e => {
+                                var val = e.target.value;
+                                this.setState({ password: val });
+                            }
+                            }
+                        />
 
-                    <button onClick={this.findUser} type='button' className='button'>Login</button>
-                </form>
+                        <button onClick={this.findUser} type='button' className='button'>Login</button>
+                    </form>
+                }
                 Not registered yet? <Link to='/register'> Create a new account.</Link>
             </div>
         )
@@ -71,7 +75,6 @@ export class Login extends Component {
 }
 
 const LoginFailed = () => {
-
     return (
         <h4>Email or Password wrong.</h4>
     )

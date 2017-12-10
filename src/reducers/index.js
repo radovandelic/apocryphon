@@ -14,7 +14,7 @@ for (let i = 0; i < 200; i++) {
     }
 }
 
-function languageReducer(state = { origin: 'en', target: 'en', stages: initStages }, action) {
+function languageReducer(state = { origin: 'en', target: 'de', stages: initStages }, action) {
     switch (action.type) {
         case 'CHANGE_LANGUAGE':
             if (action.direction === "origin") {
