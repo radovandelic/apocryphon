@@ -113,9 +113,9 @@ router.post('/login', (req, res) => {
           .then(result => {
             if (result) {
               user.password = undefined;
-              //req.session.user = user;
+              req.session.user = user;
 
-              //console.log(req.session);
+              console.log(req.session);
               //console.log(user);
               res.status(200).json(user);
             } else
