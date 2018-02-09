@@ -3,7 +3,7 @@ import config from '../../config.json';
 var router = require('express').Router();
 var User = require('./model');
 var bcrypt = require('bcrypt');
-var session = require('client-sessions');
+//var session = require('client-sessions');
 //var passport = require('passport');// 3rd party middleware
 
 var origins = ['http://localhost:8080', 'http://localhost:3000', 'http://localhost', 'https://localhost',
@@ -32,7 +32,7 @@ router.post('/create', (req, res) => {
         User.create(user)
           .then(user => {
             user.password = undefined;
-            req.session.user = user;
+            //req.session.user = user;
             res.status(200).json(user);
           })
           .catch(err => {
@@ -113,9 +113,9 @@ router.post('/login', (req, res) => {
           .then(result => {
             if (result) {
               user.password = undefined;
-              req.session.user = user;
+              //req.session.user = user;
 
-              console.log(req.session);
+              //console.log(req.session);
               //console.log(user);
               res.status(200).json(user);
             } else
@@ -134,7 +134,7 @@ router.post('/login', (req, res) => {
 router.post('/logout', (req, res) => {
   //console.log('this is sesson', req.session.user);
   //console.log('this is req.user', req.user);
-  req.session.reset();
+  //req.session.reset();
 
   res.status(200).json('you have logged out');
 });
