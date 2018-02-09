@@ -23,6 +23,7 @@ var origins = ['http://localhost:8080', 'http://localhost:3000', 'http://localho
 // C //
 router.post('/create', (req, res) => {
   var user = req.body;
+  console.log(req.body);
   if (user.email && user.password) {
     bcrypt.hash(user.password, 8, (err, hash) => {
       if (err) {
