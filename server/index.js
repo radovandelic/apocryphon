@@ -8,6 +8,7 @@ import middleware from './middleware';
 import api from './api';
 import config from './config.json';
 import userRoutes from './api/users/routes';
+var path = require('path');
 var cookieParser = require('cookie-parser');
 var User = require('./api/users/model');
 var bcrypt = require('bcrypt'),
@@ -59,8 +60,9 @@ app.use(
 );
 
 app.use(express.static('build'));
-
-// app.use("/", express.static("build"));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+});
 
 // connect to db
 initializeDb(db => {
