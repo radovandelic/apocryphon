@@ -12,13 +12,13 @@ var origins = ['http://localhost:8080', 'http://localhost:3000', 'http://localho
   'https://philarios.gq', 'https://www.philarios.gq',
   'http://philarios.gq', 'http://www.philarios.gq']
 
-router.use(
+/*router.use(
   cors({
     origin: '*',
-    /*credentials: true,*/
+    /*credentials: true,
     exposedHeaders: config.corsHeaders
   })
-);
+);*/
 
 // C //
 router.post('/create', (req, res) => {
@@ -113,11 +113,11 @@ router.post('/login', (req, res) => {
           .then(result => {
             if (result) {
               user.password = undefined;
-              req.session.user = user;
+              //req.session.user = user;
 
+              //console.log(req.session);
+              //console.log(user);
               res.status(200).json(user);
-              console.log(req.session);
-              console.log(user);
             } else
               res
                 .status(404)
