@@ -3,22 +3,24 @@ import config from '../../config.json';
 var router = require('express').Router();
 var User = require('./model');
 var bcrypt = require('bcrypt');
-//var session = require('client-sessions');
+var session = require('client-sessions');
 //var passport = require('passport');// 3rd party middleware
 
-var origins = ['http://localhost:8080', 'http://localhost:3000', 'http://localhost', 'https://localhost',
+/*var origins = ['http://localhost:8080', 'http://localhost:3000', 'http://localhost', 'https://localhost',
   'philarios.ml', 'www.philarios.ml',
   'http://philarios.ml', 'http://www.philarios.ml',
   'https://philarios.gq', 'https://www.philarios.gq',
   'http://philarios.gq', 'http://www.philarios.gq']
-
-/*router.use(
-  cors({
-    origin: '*',
-    /*credentials: true,
-    exposedHeaders: config.corsHeaders
-  })
-);*/
+*/
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV === 'development') {
+  router.use(
+    cors({
+      origin: '*',
+      exposedHeaders: config.corsHeaders
+    })
+  );
+}
 
 // C //
 router.post('/create', (req, res) => {

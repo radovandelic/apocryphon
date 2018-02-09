@@ -29,6 +29,7 @@ export class Login extends Component {
                     changeLanguage(res.data.languages[0].target, 'target');
                     isLoggedIn(res.data);
                     this.setState({ validation: 'valid' })
+                    window.location = "/dashboard"
                 } else {
                     this.setState({ validation: 'invalid' })
                 }
@@ -37,7 +38,6 @@ export class Login extends Component {
     }
     render() {
         var { login } = this.props;
-        console.log(login)
         return (
             <div className='content login'>
                 <h1>Login</h1>

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
-
 import { Link } from 'react-router-dom';
-
 import { connect } from 'react-redux';
+import { isLoggedIn, updateProgress, changeLanguage } from '../actions';
 
 export class Register extends Component {
     constructor(props) {
@@ -36,10 +34,15 @@ export class Register extends Component {
                 ? `http://localhost:8080/user/create` : `https://${hostname}/user/create`;
             axios.post(hosturl, user)
                 .then(res => {
-                    if (res.data.status === 200) {
-                        this.setState({ successful: true });
+                    if (res.status === 200) {
+                        updateProgress(res.data.languages[0].stages);
+                        changeLanguage(res.data.languages[0].origin, 'origin');
+                        changeLanguage(res.data.languages[0].target, 'target');
+                        isLoggedIn(res.data);
+                        this.setState({ successful: true }, () => {
+                            window.location = "/dashboard"
+                        });
                     }
-                    console.log(res)
 
                 })
                 .catch(error => console.log(error.response))
